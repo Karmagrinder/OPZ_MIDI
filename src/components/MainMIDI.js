@@ -5,6 +5,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Alert from 'react-bootstrap/Alert';
+import NoteToKeyConverter from './NoteToKeyConverter';
 
 class MainMIDI extends Component{
 
@@ -29,7 +30,8 @@ class MainMIDI extends Component{
         this.noteOn = this.noteOn.bind(this);
         this.noteOff = this.noteOff.bind(this);
         this.clockHandler = this.clockHandler.bind(this);
-        this.updateOutPut = this.updateOutPut.bind(this);        
+        this.updateOutPut = this.updateOutPut.bind(this);
+        
     };
 
     
@@ -119,7 +121,7 @@ class MainMIDI extends Component{
     noteOn(command, note, velocity){
         this.setState({
             channel: command,
-            note: note,
+            note: this.refs.NoteToKeyConverter.getKey(note),
             velocity: velocity 
         });
         this.updateOutPut();
@@ -127,7 +129,7 @@ class MainMIDI extends Component{
 
     noteOff(note){
         this.setState({
-            note: note,
+            note: this.refs.NoteToKeyConverter.getKey(note),
             velocity: 0
         })
         this.updateOutPut();
