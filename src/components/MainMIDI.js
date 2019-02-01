@@ -3,6 +3,8 @@ import './MainMIDI.css';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Alert from 'react-bootstrap/Alert';
 
 class MainMIDI extends Component{
 
@@ -10,6 +12,7 @@ class MainMIDI extends Component{
         super();
         this.state = {
             midiAccessSuccess: false,
+            midiAccessDisplay:"",
             inputs: {},
             outputs: {},
             ModuleOutput:"",
@@ -42,7 +45,7 @@ class MainMIDI extends Component{
                 <div>
                     <Container>
                         <Row>
-                            <Col>{this.state.midiAccessSuccess}</Col>
+                            <Col>{this.state.midiAccessDisplay}</Col>
                             <Col>Clock: {this.state.clock}</Col>
                         </Row>
                         <Row>
@@ -65,7 +68,8 @@ class MainMIDI extends Component{
             midiAccessSuccess: true,
             inputs: midiAccess.inputs,
             outputs: midiAccess.outputs,
-            displayMessage: "This browser supports MIDI input"
+            displayMessage: "This browser supports MIDI input",
+            midiAccessDisplay: <Alert variant="success">MIDI access OK</Alert>
          });
 
          for(var input of midiAccess.inputs.values()){
@@ -79,7 +83,9 @@ class MainMIDI extends Component{
 
     onMIDIFailure(){
         this.setState({
-            displayMessage: "WebMIDI is not supported by this browser"
+            midiAccessSuccess: false,
+            displayMessage: "WebMIDI is not supported by this browser",
+            midiAccessDisplay: <Alert variant="danger">MIDI not supported</Alert>
         });
         console.log('WebMIDI is not supported by this browser.');
     }
@@ -90,11 +96,11 @@ class MainMIDI extends Component{
         var velocity = (message.data.length > 2) ? message.data[2] : 0; // a velocity value might not be included with a noteOff command
         //console.log("Command:"+ command + ", Note:" + note + ",Velocity:" + velocity)
         
-        if( command < 144)
+        if( command < 144) // Note Off messages for channels
         {
             this.noteOff(note);
         }
-        else if( command < 159)
+        else if( command < 159) // Note channels
         {
             if (velocity > 0) {
                 console.log("Command:"+ command + ", Note:" + note + ",Velocity:" + velocity)
@@ -103,32 +109,11 @@ class MainMIDI extends Component{
                 this.noteOff(note);
             }
         }
-        else if(command === 248)
+        else if(command === 248) // Timing clock message
         {
             this.clockHandler();
         }
 
-
-        // switch (command) {
-        //     case 144: // noteOn
-        //         if (velocity > 0) {
-        //             console.log("Command:"+ command + ", Note:" + note + ",Velocity:" + velocity)
-        //             this.noteOn(command, note, velocity);
-        //         } else {
-        //             this.noteOff(note);
-        //         }
-        //         break;
-        //     case 128: // noteOff
-        //         this.noteOff(note);
-        //         break;
-            
-        //     case 248: // Timing clock
-        //         this.clockHandler()
-        //         break;
-        //     default:
-        //         break;
-        //     // we could easily expand this switch statement to cover other types of commands such as controllers or sysex
-        // }
     }
     
     noteOn(command, note, velocity){
