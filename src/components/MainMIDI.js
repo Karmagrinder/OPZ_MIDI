@@ -31,7 +31,6 @@ class MainMIDI extends Component{
         this.noteOff = this.noteOff.bind(this);
         this.clockHandler = this.clockHandler.bind(this);
         this.updateOutPut = this.updateOutPut.bind(this);
-        
     };
 
     
@@ -52,7 +51,7 @@ class MainMIDI extends Component{
                         </Row>
                         <Row>
                             <Col>Channel/Command:{this.state.channel}</Col>
-                            <Col>Note: {this.state.note}</Col>
+                            <Col>Note: <NoteToKeyConverter  note = {this.state.note} />  </Col>
                             <Col>Velocity: {this.state.velocity}</Col>
                         </Row>
                     </Container>
@@ -121,7 +120,7 @@ class MainMIDI extends Component{
     noteOn(command, note, velocity){
         this.setState({
             channel: command,
-            note: this.refs.NoteToKeyConverter.getKey(note),
+            note: note,
             velocity: velocity 
         });
         this.updateOutPut();
@@ -129,7 +128,7 @@ class MainMIDI extends Component{
 
     noteOff(note){
         this.setState({
-            note: this.refs.NoteToKeyConverter.getKey(note),
+            note: note,
             velocity: 0
         })
         this.updateOutPut();
