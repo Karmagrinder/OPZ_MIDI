@@ -5,7 +5,9 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Alert from 'react-bootstrap/Alert';
+import Card from 'react-bootstrap/Card';
 import NoteToKeyConverter from './NoteToKeyConverter';
+import InstrumentTrackComponent from './InstrumentsTrackHandler';
 
 class MainMIDI extends Component{
 
@@ -23,6 +25,9 @@ class MainMIDI extends Component{
             note:"C",
             velocity:0
         };
+
+        this.midiMessage = "";
+        this.instrumetComponentEnable = false;
         // Bind all the functions
         this.onMIDISuccess = this.onMIDISuccess.bind(this);
         this.onMIDIFailure = this.onMIDIFailure.bind(this);
@@ -55,6 +60,11 @@ class MainMIDI extends Component{
                             <Col>Velocity: {this.state.velocity}</Col>
                         </Row>
                     </Container>
+                    <Card>
+                        <div>
+                            {this.instrumetComponentEnable && <InstrumentTrackComponent message={this.midiMessage} />}
+                        </div>
+                    </Card>                    
                 </div>
         });
     }
@@ -96,6 +106,12 @@ class MainMIDI extends Component{
         var note = message.data[1];
         var velocity = (message.data.length > 2) ? message.data[2] : 0; // a velocity value might not be included with a noteOff command
         //console.log("Command:"+ command + ", Note:" + note + ",Velocity:" + velocity)
+        if(command >175 && command<184){
+            this.midiMessage = message;
+            this.instrumetComponentEnable = true;
+            console.log("Command:"+ command + ", Note:" + note + ",Velocity:" + velocity);
+            this.updateOutPut();
+        }
         
         if( command < 144) // Note Off messages for channels
         {
