@@ -1,12 +1,8 @@
 import React, { Component } from 'react'
 import './MainMIDI.css';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Alert from 'react-bootstrap/Alert';
 import Card from 'react-bootstrap/Card';
-import NoteToKeyConverter from './NoteToKeyConverter';
 import InstrumentTrackComponent from './InstrumentsTrackHandler';
 
 class MainMIDI extends Component{
@@ -48,19 +44,17 @@ class MainMIDI extends Component{
     updateOutPut(){
         this.setState({
             ModuleOutput:
-                <div>
-                    <Container>
-                        <Row>
-                            <Col>{this.state.midiAccessDisplay}</Col>
-                            <Col>Clock: {this.state.clock}</Col>
-                        </Row>
-                        <Row>
-                            <Col>Channel/Command:{this.state.channel}</Col>
-                            <Col>Note: <NoteToKeyConverter  note = {this.state.note} />  </Col>
-                            <Col>Velocity: {this.state.velocity}</Col>
-                        </Row>
-                    </Container>
-                    <Card>
+                <div className="OutputModule"> 
+                    <Card bg='dark' style={{ height: '6rem' }}>
+                        <Card.Body>
+                            <div style={{width:'70px', padding:'2px'}}>
+                                {this.state.midiAccessDisplay}
+                            </div>
+
+                        </Card.Body>
+
+                    </Card>
+                    <Card bg='dark'>
                         <div>
                             {this.instrumetComponentEnable && <InstrumentTrackComponent message={this.midiMessage} />}
                         </div>
@@ -80,7 +74,7 @@ class MainMIDI extends Component{
             inputs: midiAccess.inputs,
             outputs: midiAccess.outputs,
             displayMessage: "This browser supports MIDI input",
-            midiAccessDisplay: <Alert variant="success">MIDI access OK</Alert>
+            midiAccessDisplay: <Alert variant="success">[|]</Alert>
          });
 
          for(var input of midiAccess.inputs.values()){
@@ -96,7 +90,7 @@ class MainMIDI extends Component{
         this.setState({
             midiAccessSuccess: false,
             displayMessage: "WebMIDI is not supported by this browser",
-            midiAccessDisplay: <Alert variant="danger">MIDI not supported</Alert>
+            midiAccessDisplay: <Alert variant="danger">[0]]</Alert>
         });
         console.log('WebMIDI is not supported by this browser.');
     }
@@ -105,11 +99,17 @@ class MainMIDI extends Component{
         var command = message.data[0];
         var note = message.data[1];
         var velocity = (message.data.length > 2) ? message.data[2] : 0; // a velocity value might not be included with a noteOff command
-        //console.log("Command:"+ command + ", Note:" + note + ",Velocity:" + velocity)
-        if(command >175 && command<184){
+
+        if(command !== 248)
+        {
+            console.log("Command:"+ command + ", Note:" + note + ",Velocity:" + velocity)
+        }
+
+        //if(command >175 && command<184){
+        if ((command > 143 && command < 152) || (command > 175 && command < 184)){
             this.midiMessage = message;
             this.instrumetComponentEnable = true;
-            console.log("Command:"+ command + ", Note:" + note + ",Velocity:" + velocity);
+            //console.log("Command:"+ command + ", Note:" + note + ",Velocity:" + velocity);
             this.updateOutPut();
         }
         

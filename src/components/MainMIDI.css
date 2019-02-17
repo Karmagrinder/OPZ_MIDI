@@ -1,5 +1,6 @@
 .OutputModule{
-    text-align: center;
-    align-items: center;
-    color: green;
+   background-color: rgb(100, 100, 100);
+  color: white;
+  align-items: center;
+  
 }

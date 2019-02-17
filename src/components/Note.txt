@@ -1,0 +1,16 @@
+bubbles: true
+cancelBubble: false
+cancelable: false
+composed: false
+currentTarget: MIDIInput {onmidimessage: ƒ, connection: "open", id: "-108915792", manufacturer: "teenage engineering ab", name: "OP-Z", …}
+data: Uint8Array [248]
+defaultPrevented: false
+eventPhase: 2
+isTrusted: true
+path: []
+returnValue: true
+srcElement: MIDIInput {onmidimessage: ƒ, connection: "open", id: "-108915792", manufacturer: "teenage engineering ab", name: "OP-Z", …}
+target: MIDIInput {onmidimessage: ƒ, connection: "open", id: "-108915792", manufacturer: "teenage engineering ab", name: "OP-Z", …}
+timeStamp: 210824.8349999999
+type: "midimessage"
+__proto__: MIDIMessageEvent

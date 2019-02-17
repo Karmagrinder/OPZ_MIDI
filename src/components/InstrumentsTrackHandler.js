@@ -5,11 +5,33 @@ import Col from 'react-bootstrap/Col';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './InstrumentsTrackHandler.css';
 import Card from 'react-bootstrap/Card';
+import StyledProgressbar from './StyledProgressBar';
+
+//colors
+const green = "#218442";
+const blue = "#028ace";
+const yellow = "#ffed28";
+const red = "#e20404";
 
 class InstrumentsTrackHandler extends Component{
     constructor(props, ref){
         super(props, ref);
-        this.trackProperties = {
+        this.instrumentTracks = []
+        this.trackNames = ["Kick", "Snare", "HiHat", "Samples", "Bass", "Lead", "Arp", "Chord"]
+        this.currentActiveTrack = {}
+
+        this.parseMessage = this.parseMessage.bind(this);
+        this.handleMessage = this.handleMessage.bind(this);
+        this.moduleOutput = this.moduleOutput.bind(this);
+        this.midiCC = this.midiCC.bind(this);
+        this.setActiveTrack = this.setActiveTrack.bind(this);
+        this.saveActiveTrack = this.saveActiveTrack.bind(this);
+    };
+
+    
+
+    componentWillMount() {
+        var trackTemplate = {
             trackName: "",
             p1: "",
             p2: "",
@@ -26,127 +48,145 @@ class InstrumentsTrackHandler extends Component{
             fx1: "",
             fx2: "",
             pan: "",
-            level: ""            
+            level: ""
         }
-        this.parseMessage = this.parseMessage.bind(this);
-        this.handleMessage = this.handleMessage.bind(this);
-        this.moduleOutput = this.moduleOutput.bind(this);
-        this.getTrackName = this.getTrackName.bind(this);
-        this.handleNote = this.handleNote.bind(this);
-    };
+
+        var i;
+        for (i = 0; i <=7; i++) {
+            var newTrack = Object.create(trackTemplate);
+            this.instrumentTracks.push(newTrack);
+            this.instrumentTracks[i].trackName = this.trackNames[i];
+        }
+    }
 
     moduleOutput(){
         return (
-            <div className = "container">
-                    Track: {this.trackProperties.trackName}
+            <div className="Instrument-tracks-component ">
+                <span>
                     <Container>
-                        <Card>
+                        <Card bg='dark'>
+                            <Card.Title>Track: {this.currentActiveTrack.trackName}</Card.Title>
+                        </Card>
+                        <Card bg="dark" text="white">
                             <Row>
-                                <Col> Parameters: </Col>
-                                <Col> P1: {this.trackProperties.p1}</Col>
-                                <Col> P2: {this.trackProperties.p2}</Col>
-                                <Col> Filter: {this.trackProperties.filter}</Col>
-                                <Col> Resonance: {this.trackProperties.resonance}</Col>
+                                <Col><Card.Title>Parameters: </Card.Title></Col>
+                                <Col><StyledProgressbar percentage={this.currentActiveTrack.p1} text={`P1:${this.currentActiveTrack.p1}`} color={green}/></Col>
+                                <Col><StyledProgressbar percentage={this.currentActiveTrack.p2} text={`P2:${this.currentActiveTrack.p2}`} color={blue} /></Col>
+                                <Col><StyledProgressbar percentage={this.currentActiveTrack.filter} text={`Filter:${this.currentActiveTrack.filter}`} color={yellow} /></Col>
+                                <Col><StyledProgressbar percentage={this.currentActiveTrack.resonance} text={`Reso:${this.currentActiveTrack.resonance}`} color={red} /></Col>
                             </Row>
                         </Card>                    
-                        <Card>
+                        <Card bg="dark" text="white"  >
                             <Row>
-                                <Col> Envelope: </Col>
-                                <Col> Attack: {this.trackProperties.attack}</Col>
-                                <Col> Decay: {this.trackProperties.decay}</Col>
-                                <Col> Sustan: {this.trackProperties.sustain}</Col>
-                                <Col> Release: {this.trackProperties.release}</Col>
+                                <Col><Card.Title>Envelope:</Card.Title></Col>
+                                <Col><StyledProgressbar percentage={this.currentActiveTrack.attack} text={`A:${this.currentActiveTrack.attack}`} color={green} /></Col>
+                                <Col><StyledProgressbar percentage={this.currentActiveTrack.decay} text={`D:${this.currentActiveTrack.decay}`} color={blue} /></Col>
+                                <Col><StyledProgressbar percentage={this.currentActiveTrack.sustain} text={`S:${this.currentActiveTrack.sustain}`} color={yellow}  /></Col>
+                                <Col><StyledProgressbar percentage={this.currentActiveTrack.release} text={`R:${this.currentActiveTrack.release}`} color={red} /></Col>
                             </Row>
+                        </Card>                        
+                        <Card bg="dark" text="white"  >
+                            <Row>
+                                <Col><Card.Title>LFO:</Card.Title></Col>
+                                <Col><StyledProgressbar percentage={this.currentActiveTrack.depth} text={`Depth:${this.currentActiveTrack.depth}`} color={green}/></Col>
+                                <Col><StyledProgressbar percentage={this.currentActiveTrack.rate} text={`Rate:${this.currentActiveTrack.rate}`} color={blue}/></Col>
+                                <Col><StyledProgressbar percentage={this.currentActiveTrack.dest} text={`Target:${this.currentActiveTrack.dest}`} color={yellow}/></Col>
+                                <Col><StyledProgressbar percentage={this.currentActiveTrack.shape} text={`Shape:${this.currentActiveTrack.shape}`} color={red}/></Col>
+                            </Row>                            
                         </Card>
-                        
-                        <Card>
+                        <Card bg="dark" text="white"  >
                             <Row>
-                                <Col> LFO: </Col>
-                                <Col> Depth: {this.trackProperties.depth}</Col>
-                                <Col> Rate: {this.trackProperties.rate}</Col>
-                                <Col> Dest: {this.trackProperties.dest}</Col>
-                                <Col> Shape: {this.trackProperties.shape}</Col>
-                            </Row>
-                        </Card>
-                        <Card>
-                            <Row>
-                                <Col> Master: </Col>
-                                <Col> Fx1: {this.trackProperties.fx1}</Col>
-                                <Col> Fx2: {this.trackProperties.fx2}</Col>
-                                <Col> Pan: {this.trackProperties.pan}</Col>
-                                <Col> Level: {this.trackProperties.level}</Col>
-                            </Row>
+                                <Col><Card.Title>Master:</Card.Title></Col>
+                                <Col><StyledProgressbar percentage={this.currentActiveTrack.fx1} text={`Fx1:${this.currentActiveTrack.fx1}`} color={green} /></Col>
+                                <Col><StyledProgressbar percentage={this.currentActiveTrack.fx2} text={`Fx2:${this.currentActiveTrack.fx2}`} color={blue} /></Col>
+                                <Col><StyledProgressbar percentage={this.currentActiveTrack.pan} text={`Pan:${this.currentActiveTrack.pan}`} color={yellow} /></Col>
+                                <Col><StyledProgressbar percentage={this.currentActiveTrack.level} text={`Level:${this.currentActiveTrack.level}`} color={red}  /></Col>
+                            </Row>                            
                         </Card>
                         
                     </Container>
+
+                </span>
             </div>
         );
         
                  
     }
 
+    
+    setActiveTrack(trackId){
+        this.currentActiveTrack = this.instrumentTracks[trackId];
+    }
+
+    saveActiveTrack(trackId){
+        this.instrumentTracks[trackId] = this.currentActiveTrack;
+    }
+
     parseMessage(message){
         var command = message.data[0];
         var note = message.data[1];
         var velocity = (message.data.length > 2) ? message.data[2] : 0; // a velocity value might not be included with a noteOff command
-        //console.log("Command:"+ command + ", Note:" + note + ",Velocity:" + velocity)
+        var trackId = this.getTrackId(command);
+        this.setActiveTrack(trackId);
+        if (command > 175 && command < 184){
+            this.midiCC(note, velocity);
+        }              
         
-        this.trackProperties.trackName = this.getTrackName(command);
-        
-        this.handleNote(note, velocity);
-        
-        //this.updateOutput();
+        this.saveActiveTrack(trackId);
     }
 
-    handleNote(note, velocity){
+    
+
+
+    midiCC(note, velocity){
         switch(note){
             case 1:
-                this.trackProperties.p1 = this.convertTo100Range(velocity);
+                this.currentActiveTrack.p1 = this.convertTo100Range(velocity);
                 break;
             case 2:
-                this.trackProperties.p2 = this.convertTo100Range(velocity);
+                this.currentActiveTrack.p2 = this.convertTo100Range(velocity);
                 break;
             case 3:
-                this.trackProperties.filter = this.convertTo100Range(velocity);
+                this.currentActiveTrack.filter = this.convertTo100Range(velocity);
                 break;
             case 4:
-                this.trackProperties.resonance = this.convertTo100Range(velocity);
+                this.currentActiveTrack.resonance = this.convertTo100Range(velocity);
                 break;
             case 5:
-                this.trackProperties.attack = this.convertTo100Range(velocity);
+                this.currentActiveTrack.attack = this.convertTo100Range(velocity);
                 break;
             case 6:
-                this.trackProperties.decay = this.convertTo100Range(velocity);
+                this.currentActiveTrack.decay = this.convertTo100Range(velocity);
                 break;
             case 7:
-                this.trackProperties.sustain = this.convertTo100Range(velocity);
+                this.currentActiveTrack.sustain = this.convertTo100Range(velocity);
                 break;
             case 8:
-                this.trackProperties.release = this.convertTo100Range(velocity);
+                this.currentActiveTrack.release = this.convertTo100Range(velocity);
                 break;
             case 9:
-                this.trackProperties.depth = this.convertTo100Range(velocity);
+                this.currentActiveTrack.depth = this.convertTo100Range(velocity);
                 break;
             case 10:
-                this.trackProperties.rate = this.convertTo100Range(velocity);
+                this.currentActiveTrack.rate = this.convertTo100Range(velocity);
                 break;
             case 11:
-                this.trackProperties.dest = this.convertTo100Range(velocity);
+                this.currentActiveTrack.dest = this.convertTo100Range(velocity);
                 break;
             case 12:
-                this.trackProperties.shape = this.convertTo100Range(velocity);
+                this.currentActiveTrack.shape = this.convertTo100Range(velocity);
                 break;
             case 13:
-                this.trackProperties.fx1 = this.convertTo100Range(velocity);
+                this.currentActiveTrack.fx1 = this.convertTo100Range(velocity);
                 break;
             case 14:
-                this.trackProperties.fx2 = this.convertTo100Range(velocity);
+                this.currentActiveTrack.fx2 = this.convertTo100Range(velocity);
                 break;
             case 15:
-                this.trackProperties.pan = this.convertTo100Range(velocity);
+                this.currentActiveTrack.pan = this.convertTo100Range(velocity);
                 break;
             case 16:
-                this.trackProperties.level = this.convertTo100Range(velocity);
+                this.currentActiveTrack.level = this.convertTo100Range(velocity);
                 break;
             default:
                 break;
@@ -158,39 +198,65 @@ class InstrumentsTrackHandler extends Component{
         return  Math.ceil((value*100)/127);
     }
 
-    getTrackName(command){
-        var trackName = ""
-        switch(command){
+    getTrackId(command) {
+        var trackId = 0
+        switch (command) {
             case 176:
-                trackName = "Kick";
+                trackId = 0;
                 break;
             case 177:
-                trackName = "Snare";
+                trackId = 1;
                 break;
             case 178:
-                trackName = "HiHat";
+                trackId = 2;
                 break;
             case 179:
-                trackName = "Samples";
+                trackId = 3;
                 break;
             case 180:
-                trackName = "Bass";
+                trackId = 4;
                 break;
             case 181:
-                trackName = "Lead";
+                trackId = 5;
                 break;
             case 182:
-                trackName = "Arp";
+                trackId = 6;
                 break;
             case 183:
-                trackName = "Chord";
+                trackId = 7;
+                break;
+            case 144:
+                trackId = 0;
+                break;
+            case 145:
+                trackId = 1;
+                break;
+            case 146:
+                trackId = 2;
+                break;
+            case 147:
+                trackId = 3;
+                break;
+            case 148:
+                trackId = 4;
+                break;
+            case 149:
+                trackId = 5;
+                break;
+            case 150:
+                trackId = 6;
+                break;
+            case 151:
+                trackId = 7;
                 break;
             default:
+                trackId = 0;
                 break;
         }
-        return trackName
+        
+        return trackId;
     }
-
+    
     handleMessage(midiMessage){
         this.parseMessage(midiMessage);        
         return this.moduleOutput();
