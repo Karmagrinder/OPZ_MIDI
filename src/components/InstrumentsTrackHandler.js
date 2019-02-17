@@ -5,8 +5,13 @@ import Col from 'react-bootstrap/Col';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './InstrumentsTrackHandler.css';
 import Card from 'react-bootstrap/Card';
-import CircularProgressbar from 'react-circular-progressbar';
-import 'react-circular-progressbar/dist/styles.css';
+import StyledProgressbar from './StyledProgressBar';
+
+//colors
+const green = "#218442";
+const blue = "#028ace";
+const yellow = "#ffed28";
+const red = "#e20404";
 
 class InstrumentsTrackHandler extends Component{
     constructor(props, ref){
@@ -22,6 +27,8 @@ class InstrumentsTrackHandler extends Component{
         this.setActiveTrack = this.setActiveTrack.bind(this);
         this.saveActiveTrack = this.saveActiveTrack.bind(this);
     };
+
+    
 
     componentWillMount() {
         var trackTemplate = {
@@ -54,44 +61,46 @@ class InstrumentsTrackHandler extends Component{
 
     moduleOutput(){
         return (
-            <div>
+            <div className="Instrument-tracks-component ">
                 <span>
-                    Track: {this.currentActiveTrack.trackName}
                     <Container>
-                        <Card>
+                        <Card bg='dark'>
+                            <Card.Title>Track: {this.currentActiveTrack.trackName}</Card.Title>
+                        </Card>
+                        <Card bg="dark" text="white">
                             <Row>
-                                <Col> Parameters: </Col>
-                                <Col><CircularProgressbar percentage={this.currentActiveTrack.p1} text={`P1:${this.currentActiveTrack.p1}`} styles={{path:{stroke: "#218442"}}}/></Col>
-                                <Col><CircularProgressbar percentage={this.currentActiveTrack.p2} text={`P2:${this.currentActiveTrack.p2}`} styles={{ path: { stroke: "#028ace"} }} /></Col>
-                                <Col><CircularProgressbar percentage={this.currentActiveTrack.filter} text={`Filter:${this.currentActiveTrack.filter}`} styles={{ path: { stroke: "#ffed28" } }} /></Col>
-                                <Col><CircularProgressbar percentage={this.currentActiveTrack.resonance} text={`Reso:${this.currentActiveTrack.resonance}`} styles={{ path: { stroke: "#e20404" } }} /></Col>
+                                <Col><Card.Title>Parameters: </Card.Title></Col>
+                                <Col><StyledProgressbar percentage={this.currentActiveTrack.p1} text={`P1:${this.currentActiveTrack.p1}`} color={green}/></Col>
+                                <Col><StyledProgressbar percentage={this.currentActiveTrack.p2} text={`P2:${this.currentActiveTrack.p2}`} color={blue} /></Col>
+                                <Col><StyledProgressbar percentage={this.currentActiveTrack.filter} text={`Filter:${this.currentActiveTrack.filter}`} color={yellow} /></Col>
+                                <Col><StyledProgressbar percentage={this.currentActiveTrack.resonance} text={`Reso:${this.currentActiveTrack.resonance}`} color={red} /></Col>
                             </Row>
                         </Card>                    
-                        <Card>
+                        <Card bg="dark" text="white"  >
                             <Row>
-                                <Col> Envelope: </Col>
-                                <Col><CircularProgressbar percentage={this.currentActiveTrack.attack} text={`A:${this.currentActiveTrack.attack}`} styles={{ path: { stroke: "#218442" } }} /></Col>
-                                <Col><CircularProgressbar percentage={this.currentActiveTrack.decay} text={`D:${this.currentActiveTrack.decay}`} styles={{ path: { stroke: "#028ace" } }} /></Col>
-                                <Col><CircularProgressbar percentage={this.currentActiveTrack.sustain} text={`S:${this.currentActiveTrack.sustain}`} styles={{ path: { stroke: "#ffed28" } }} /></Col>
-                                <Col><CircularProgressbar percentage={this.currentActiveTrack.release} text={`R:${this.currentActiveTrack.release}`} styles={{ path: { stroke: "#e20404" } }} /></Col>
+                                <Col><Card.Title>Envelope:</Card.Title></Col>
+                                <Col><StyledProgressbar percentage={this.currentActiveTrack.attack} text={`A:${this.currentActiveTrack.attack}`} color={green} /></Col>
+                                <Col><StyledProgressbar percentage={this.currentActiveTrack.decay} text={`D:${this.currentActiveTrack.decay}`} color={blue} /></Col>
+                                <Col><StyledProgressbar percentage={this.currentActiveTrack.sustain} text={`S:${this.currentActiveTrack.sustain}`} color={yellow}  /></Col>
+                                <Col><StyledProgressbar percentage={this.currentActiveTrack.release} text={`R:${this.currentActiveTrack.release}`} color={red} /></Col>
                             </Row>
                         </Card>                        
-                        <Card>
+                        <Card bg="dark" text="white"  >
                             <Row>
-                                <Col> LFO: </Col>
-                                <Col><CircularProgressbar percentage={this.currentActiveTrack.depth} text={`Depth:${this.currentActiveTrack.depth}`} styles={{ path: { stroke: "#218442" } }} /></Col>
-                                <Col><CircularProgressbar percentage={this.currentActiveTrack.rate} text={`Rate:${this.currentActiveTrack.rate}`} styles={{ path: { stroke: "#028ace" } }} /></Col>
-                                <Col><CircularProgressbar percentage={this.currentActiveTrack.dest} text={`Target:${this.currentActiveTrack.dest}`} styles={{ path: { stroke: "#ffed28" } }} /></Col>
-                                <Col><CircularProgressbar percentage={this.currentActiveTrack.shape} text={`Shape:${this.currentActiveTrack.shape}`} styles={{ path: { stroke: "#e20404" } }} /></Col>
+                                <Col><Card.Title>LFO:</Card.Title></Col>
+                                <Col><StyledProgressbar percentage={this.currentActiveTrack.depth} text={`Depth:${this.currentActiveTrack.depth}`} color={green}/></Col>
+                                <Col><StyledProgressbar percentage={this.currentActiveTrack.rate} text={`Rate:${this.currentActiveTrack.rate}`} color={blue}/></Col>
+                                <Col><StyledProgressbar percentage={this.currentActiveTrack.dest} text={`Target:${this.currentActiveTrack.dest}`} color={yellow}/></Col>
+                                <Col><StyledProgressbar percentage={this.currentActiveTrack.shape} text={`Shape:${this.currentActiveTrack.shape}`} color={red}/></Col>
                             </Row>                            
                         </Card>
-                        <Card>
+                        <Card bg="dark" text="white"  >
                             <Row>
-                                <Col> Master: </Col>
-                                <Col><CircularProgressbar percentage={this.currentActiveTrack.fx1} text={`Fx1:${this.currentActiveTrack.fx1}`} styles={{ path: { stroke: "#218442" } }} /></Col>
-                                <Col><CircularProgressbar percentage={this.currentActiveTrack.fx2} text={`Fx2:${this.currentActiveTrack.fx2}`} styles={{ path: { stroke: "#028ace" } }} /></Col>
-                                <Col><CircularProgressbar percentage={this.currentActiveTrack.pan} text={`Pan:${this.currentActiveTrack.pan}`} styles={{ path: { stroke: "#ffed28" } }} /></Col>
-                                <Col><CircularProgressbar percentage={this.currentActiveTrack.level} text={`Shape:${this.currentActiveTrack.level}`} styles={{ path: { stroke: "#e20404" } }} /></Col>
+                                <Col><Card.Title>Master:</Card.Title></Col>
+                                <Col><StyledProgressbar percentage={this.currentActiveTrack.fx1} text={`Fx1:${this.currentActiveTrack.fx1}`} color={green} /></Col>
+                                <Col><StyledProgressbar percentage={this.currentActiveTrack.fx2} text={`Fx2:${this.currentActiveTrack.fx2}`} color={blue} /></Col>
+                                <Col><StyledProgressbar percentage={this.currentActiveTrack.pan} text={`Pan:${this.currentActiveTrack.pan}`} color={yellow} /></Col>
+                                <Col><StyledProgressbar percentage={this.currentActiveTrack.level} text={`Level:${this.currentActiveTrack.level}`} color={red}  /></Col>
                             </Row>                            
                         </Card>
                         

@@ -1,13 +1,11 @@
-.container {
-  display: inline-grid;
-}
-.Row{
-
-}
-.Col{
+.Instrument-tracks-component {
+  background-color: rgb(100, 100, 100);
+  color: white;
+  align-items: center;
+  padding: 20px
 
 }
 
-.Dail{
-    text-align: center
+.Dails{
+  width: '70px';
 }
