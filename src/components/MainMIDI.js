@@ -105,11 +105,17 @@ class MainMIDI extends Component{
         var command = message.data[0];
         var note = message.data[1];
         var velocity = (message.data.length > 2) ? message.data[2] : 0; // a velocity value might not be included with a noteOff command
-        //console.log("Command:"+ command + ", Note:" + note + ",Velocity:" + velocity)
-        if(command >175 && command<184){
+
+        if(command !== 248)
+        {
+            console.log("Command:"+ command + ", Note:" + note + ",Velocity:" + velocity)
+        }
+
+        //if(command >175 && command<184){
+        if ((command > 143 && command < 152) || (command > 175 && command < 184)){
             this.midiMessage = message;
             this.instrumetComponentEnable = true;
-            console.log("Command:"+ command + ", Note:" + note + ",Velocity:" + velocity);
+            //console.log("Command:"+ command + ", Note:" + note + ",Velocity:" + velocity);
             this.updateOutPut();
         }
         
