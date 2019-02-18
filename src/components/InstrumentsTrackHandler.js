@@ -8,10 +8,10 @@ import Card from 'react-bootstrap/Card';
 import StyledProgressbar from './StyledProgressBar';
 
 //colors
-const green = "#218442";
-const blue = "#028ace";
-const yellow = "#ffed28";
-const red = "#e20404";
+const green = "#039C53";
+const blue = "#0388C0";
+const yellow = "#DCA71B";
+const red = "#C62937";
 
 class InstrumentsTrackHandler extends Component{
     constructor(props, ref){
@@ -64,10 +64,10 @@ class InstrumentsTrackHandler extends Component{
             <div className="Instrument-tracks-component ">
                 <span>
                     <Container>
-                        <Card bg='dark'>
+                        <Card bg='dark' text='secondary'>
                             <Card.Title>Track: {this.currentActiveTrack.trackName}</Card.Title>
                         </Card>
-                        <Card bg="dark" text="white">
+                        <Card bg="dark" text='secondary'>
                             <Row>
                                 <Col><Card.Title>Parameters: </Card.Title></Col>
                                 <Col><StyledProgressbar percentage={this.currentActiveTrack.p1} text={`P1:${this.currentActiveTrack.p1}`} color={green}/></Col>
@@ -76,7 +76,7 @@ class InstrumentsTrackHandler extends Component{
                                 <Col><StyledProgressbar percentage={this.currentActiveTrack.resonance} text={`Reso:${this.currentActiveTrack.resonance}`} color={red} /></Col>
                             </Row>
                         </Card>                    
-                        <Card bg="dark" text="white"  >
+                        <Card bg="dark" text="secondary"  >
                             <Row>
                                 <Col><Card.Title>Envelope:</Card.Title></Col>
                                 <Col><StyledProgressbar percentage={this.currentActiveTrack.attack} text={`A:${this.currentActiveTrack.attack}`} color={green} /></Col>
@@ -85,7 +85,7 @@ class InstrumentsTrackHandler extends Component{
                                 <Col><StyledProgressbar percentage={this.currentActiveTrack.release} text={`R:${this.currentActiveTrack.release}`} color={red} /></Col>
                             </Row>
                         </Card>                        
-                        <Card bg="dark" text="white"  >
+                        <Card bg="dark" text="secondary"  >
                             <Row>
                                 <Col><Card.Title>LFO:</Card.Title></Col>
                                 <Col><StyledProgressbar percentage={this.currentActiveTrack.depth} text={`Depth:${this.currentActiveTrack.depth}`} color={green}/></Col>
@@ -94,7 +94,7 @@ class InstrumentsTrackHandler extends Component{
                                 <Col><StyledProgressbar percentage={this.currentActiveTrack.shape} text={`Shape:${this.currentActiveTrack.shape}`} color={red}/></Col>
                             </Row>                            
                         </Card>
-                        <Card bg="dark" text="white"  >
+                        <Card bg="dark" text="secondary"  >
                             <Row>
                                 <Col><Card.Title>Master:</Card.Title></Col>
                                 <Col><StyledProgressbar percentage={this.currentActiveTrack.fx1} text={`Fx1:${this.currentActiveTrack.fx1}`} color={green} /></Col>
