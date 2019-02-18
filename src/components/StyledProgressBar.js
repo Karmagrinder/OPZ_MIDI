@@ -5,7 +5,7 @@ import 'react-circular-progressbar/dist/styles.css';
 function StyledProgressbar(props) {
     var color = props.color;
     return (
-        <div style={{ width: '100px', alignItems:'center', padding:'5px' }}>
+        <div style={{ width: '85px', alignItems:'center', padding:'5px' }}>
                 <CircularProgressbar
                     percentage={props.percentage}
                     text={props.text}
@@ -37,7 +37,7 @@ function StyledProgressbar(props) {
                             // Tweak text color:
                             fill: "#f88",
                             // Tweak text size:
-                            fontSize: "15px"
+                            fontSize: "16px",                            
                         }
                     }}
                 />

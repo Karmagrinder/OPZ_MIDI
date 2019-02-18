@@ -4,6 +4,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Alert from 'react-bootstrap/Alert';
 import Card from 'react-bootstrap/Card';
 import InstrumentTrackComponent from './InstrumentsTrackHandler';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 class MainMIDI extends Component{
 
@@ -24,6 +27,9 @@ class MainMIDI extends Component{
 
         this.midiMessage = "";
         this.instrumetComponentEnable = false;
+        this.deviceName = "";
+        this.deviceId = "";
+
         // Bind all the functions
         this.onMIDISuccess = this.onMIDISuccess.bind(this);
         this.onMIDIFailure = this.onMIDIFailure.bind(this);
@@ -47,10 +53,22 @@ class MainMIDI extends Component{
                 <div className="OutputModule"> 
                     <Card bg='dark' style={{ height: '6rem' }}>
                         <Card.Body>
-                            <div style={{width:'70px', padding:'2px'}}>
-                                {this.state.midiAccessDisplay}
-                            </div>
-
+                            <Container>
+                                <Row>
+                                    <Col>
+                                        <div style={{width:'70px', padding:'2px'}}>
+                                            {this.state.midiAccessDisplay}
+                                        </div>
+                                    </Col>
+                                    <Col>
+                                        <div className="DeviceDetails">
+                                            <b>Device:</b> {this.deviceName} &nbsp;<b>ID:</b> {this.deviceId}
+                                            <br/>
+                                            <b>Clock:</b> {this.state.clock}
+                                        </div>
+                                    </Col>
+                                </Row>
+                            </Container>
                         </Card.Body>
 
                     </Card>
@@ -79,7 +97,9 @@ class MainMIDI extends Component{
 
          for(var input of midiAccess.inputs.values()){
             input.onmidimessage = this.getMIDIMessage;
-         }
+            this.deviceId = input.id;
+            this.deviceName = input.name;
+        }
 
         console.log("MIDI Access successful");
         console.log(midiAccess);

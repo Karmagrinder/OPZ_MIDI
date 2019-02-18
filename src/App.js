@@ -7,11 +7,7 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <img className="App-logo" alt="OPZ Dails" src={ require("./assets/opz_dails.png") } />
-          <p>
-            
-          </p>
-          
+          <img className="App-logo" alt="OPZ Dails" src={ require("./assets/opz_dails.png") } />          
         </header>        
         <div>          
             <MainMIDI/>                  
