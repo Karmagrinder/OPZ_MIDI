@@ -12,6 +12,9 @@ const green = "#039C53";
 const blue = "#0388C0";
 const yellow = "#DCA71B";
 const red = "#C62937";
+const grey = "#787878";
+const opzGrey = "#646464";
+const purple = "#9e66c1";
 
 class InstrumentsTrackHandler extends Component{
     constructor(props, ref){
@@ -26,6 +29,7 @@ class InstrumentsTrackHandler extends Component{
         this.midiCC = this.midiCC.bind(this);
         this.setActiveTrack = this.setActiveTrack.bind(this);
         this.saveActiveTrack = this.saveActiveTrack.bind(this);
+        this.handleLfoShape = this.handleLfoShape.bind(this);
     };
 
     
@@ -45,6 +49,7 @@ class InstrumentsTrackHandler extends Component{
             rate: "",
             dest: "",
             shape: "",
+            shapeVal:"",
             fx1: "",
             fx2: "",
             pan: "",
@@ -64,39 +69,39 @@ class InstrumentsTrackHandler extends Component{
             <div className="Instrument-tracks-component ">
                 <span>
                     <Container>
-                        <Card bg='dark' text='secondary'>
-                            <Card.Title>Track: {this.currentActiveTrack.trackName}</Card.Title>
+                        <Card bg='dark' text='info'>
+                            <Card.Title>{this.currentActiveTrack.trackName}</Card.Title>
                         </Card>
-                        <Card bg="dark" text='secondary'>
+                        <Card bg="dark" text='white'>
                             <Row>
-                                <Col><Card.Title>Parameters: </Card.Title></Col>
+                                <Col> <Card.Title><b>Parameters</b></Card.Title></Col>
                                 <Col><StyledProgressbar percentage={this.currentActiveTrack.p1} text={`P1:${this.currentActiveTrack.p1}`} color={green}/></Col>
                                 <Col><StyledProgressbar percentage={this.currentActiveTrack.p2} text={`P2:${this.currentActiveTrack.p2}`} color={blue} /></Col>
                                 <Col><StyledProgressbar percentage={this.currentActiveTrack.filter} text={`Filter:${this.currentActiveTrack.filter}`} color={yellow} /></Col>
                                 <Col><StyledProgressbar percentage={this.currentActiveTrack.resonance} text={`Reso:${this.currentActiveTrack.resonance}`} color={red} /></Col>
                             </Row>
                         </Card>                    
-                        <Card bg="dark" text="secondary"  >
+                        <Card bg="dark" text='success'  >
                             <Row>
-                                <Col><Card.Title>Envelope:</Card.Title></Col>
+                                <Col><Card.Title><b>Envelope</b></Card.Title></Col>
                                 <Col><StyledProgressbar percentage={this.currentActiveTrack.attack} text={`A:${this.currentActiveTrack.attack}`} color={green} /></Col>
                                 <Col><StyledProgressbar percentage={this.currentActiveTrack.decay} text={`D:${this.currentActiveTrack.decay}`} color={blue} /></Col>
                                 <Col><StyledProgressbar percentage={this.currentActiveTrack.sustain} text={`S:${this.currentActiveTrack.sustain}`} color={yellow}  /></Col>
                                 <Col><StyledProgressbar percentage={this.currentActiveTrack.release} text={`R:${this.currentActiveTrack.release}`} color={red} /></Col>
                             </Row>
                         </Card>                        
-                        <Card bg="dark" text="secondary"  >
+                        <Card bg="dark" style={{ color:purple }}  >
                             <Row>
-                                <Col><Card.Title>LFO:</Card.Title></Col>
+                                <Col><Card.Title><b>LFO</b></Card.Title></Col>
                                 <Col><StyledProgressbar percentage={this.currentActiveTrack.depth} text={`Depth:${this.currentActiveTrack.depth}`} color={green}/></Col>
                                 <Col><StyledProgressbar percentage={this.currentActiveTrack.rate} text={`Rate:${this.currentActiveTrack.rate}`} color={blue}/></Col>
                                 <Col><StyledProgressbar percentage={this.currentActiveTrack.dest} text={`Target:${this.currentActiveTrack.dest}`} color={yellow}/></Col>
-                                <Col><StyledProgressbar percentage={this.currentActiveTrack.shape} text={`Shape:${this.currentActiveTrack.shape}`} color={red}/></Col>
+                                <Col><StyledProgressbar percentage={this.currentActiveTrack.shapeVal} text={`${this.currentActiveTrack.shape}`} color={red}/></Col>
                             </Row>                            
                         </Card>
-                        <Card bg="dark" text="secondary"  >
+                        <Card bg="dark" style={{ color: yellow }}  >
                             <Row>
-                                <Col><Card.Title>Master:</Card.Title></Col>
+                                <Col><Card.Title><b>Master</b></Card.Title></Col>
                                 <Col><StyledProgressbar percentage={this.currentActiveTrack.fx1} text={`Fx1:${this.currentActiveTrack.fx1}`} color={green} /></Col>
                                 <Col><StyledProgressbar percentage={this.currentActiveTrack.fx2} text={`Fx2:${this.currentActiveTrack.fx2}`} color={blue} /></Col>
                                 <Col><StyledProgressbar percentage={this.currentActiveTrack.pan} text={`Pan:${this.currentActiveTrack.pan}`} color={yellow} /></Col>
@@ -174,7 +179,8 @@ class InstrumentsTrackHandler extends Component{
                 this.currentActiveTrack.dest = this.convertTo100Range(velocity);
                 break;
             case 12:
-                this.currentActiveTrack.shape = this.convertTo100Range(velocity);
+                this.currentActiveTrack.shapeVal = this.convertTo100Range(velocity);
+                this.handleLfoShape(this.currentActiveTrack.shapeVal);
                 break;
             case 13:
                 this.currentActiveTrack.fx1 = this.convertTo100Range(velocity);
@@ -192,6 +198,24 @@ class InstrumentsTrackHandler extends Component{
                 break;
         }
 
+    }
+
+    handleLfoShape(value){
+        if(value == 0){
+            this.currentActiveTrack.shape = "Free";
+        }
+        else if(value == 100){
+            this.currentActiveTrack.shape = "Trig";
+        }
+        else if(value == 50){
+            this.currentActiveTrack.shape = "Sqr";
+        }
+        else if(value>0 && value<50){
+            this.currentActiveTrack.shape = "fr-sq"
+        }
+        else if (value > 50 && value < 100) {
+            this.currentActiveTrack.shape = "sq-tr"
+        }
     }
 
     convertTo100Range(value){
