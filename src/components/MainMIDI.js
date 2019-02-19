@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import './MainMIDI.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Alert from 'react-bootstrap/Alert';
 import Card from 'react-bootstrap/Card';
 import InstrumentTrackComponent from './InstrumentsTrackHandler';
 import Container from 'react-bootstrap/Container';
@@ -92,7 +91,7 @@ class MainMIDI extends Component{
             inputs: midiAccess.inputs,
             outputs: midiAccess.outputs,
             displayMessage: "This browser supports MIDI input",
-            midiAccessDisplay: <Alert variant="success">[|]</Alert>
+            midiAccessDisplay: <Card bg='success' text='dark'> [I] </Card>
          });
 
          for(var input of midiAccess.inputs.values()){
@@ -110,7 +109,7 @@ class MainMIDI extends Component{
         this.setState({
             midiAccessSuccess: false,
             displayMessage: "WebMIDI is not supported by this browser",
-            midiAccessDisplay: <Alert variant="danger">[0]]</Alert>
+            midiAccessDisplay: <Card bg='danger' text='dark'> [0] </Card>
         });
         console.log('WebMIDI is not supported by this browser.');
     }
