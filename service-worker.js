@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/opz_midi/precache-manifest.baa63b5cc512fe18a4f340d98e87a5d7.js"
+  "/OPZ_MIDI/precache-manifest.472b458eb79ffea35dbea7aefe2e1588.js"
 );
 
 workbox.clientsClaim();
@@ -28,7 +28,7 @@ self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute("/opz_midi/index.html", {
+workbox.routing.registerNavigationRoute("/OPZ_MIDI/index.html", {
   
   blacklist: [/^\/_/,/\/[^\/]+\.[^\/]+$/],
 });
