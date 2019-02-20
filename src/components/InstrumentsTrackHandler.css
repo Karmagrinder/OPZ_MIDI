@@ -1,11 +1,6 @@
 .Instrument-tracks-component {
   background-color: rgb(100, 100, 100);
+  align-content: stretch;
   color: white;
-  align-items: center;
-  padding: 20px
-
-}
-
-.Dails{
-  width: '70px';
+  padding: 5px;
 }

@@ -50,7 +50,7 @@ class MainMIDI extends Component{
         this.setState({
             ModuleOutput:
                 <div className="OutputModule"> 
-                    <Card bg='dark' style={{ height: '6rem' }}>
+                    <Card bg='dark' style={{ height: '5rem' }}>
                         <Card.Body>
                             <Container>
                                 <Row>
@@ -71,11 +71,11 @@ class MainMIDI extends Component{
                         </Card.Body>
 
                     </Card>
-                    <Card bg='dark'>
-                        <div>
+                    <div>
+                        <span>
                             {this.instrumetComponentEnable && <InstrumentTrackComponent message={this.midiMessage} />}
-                        </div>
-                    </Card>                    
+                        </span>
+                    </div>                                       
                 </div>
         });
     }
@@ -116,13 +116,13 @@ class MainMIDI extends Component{
 
     getMIDIMessage(message) {
         var command = message.data[0];
-        var note = message.data[1];
-        var velocity = (message.data.length > 2) ? message.data[2] : 0; // a velocity value might not be included with a noteOff command
+        //var note = message.data[1];
+        //var velocity = (message.data.length > 2) ? message.data[2] : 0; // a velocity value might not be included with a noteOff command
 
-        if(command !== 248)
-        {
-            console.log("Command:"+ command + ", Note:" + note + ",Velocity:" + velocity)
-        }
+        // if(command !== 248)
+        // {
+        //     console.log("Command:"+ command + ", Note:" + note + ",Velocity:" + velocity)
+        // }
 
         //if(command >175 && command<184){
         if ((command > 143 && command < 152) || (command > 175 && command < 184)){
@@ -132,19 +132,19 @@ class MainMIDI extends Component{
             this.updateOutPut();
         }
         
-        if( command < 144) // Note Off messages for channels
-        {
-            this.noteOff(note);
-        }
-        else if( command < 159) // Note channels
-        {
-            if (velocity > 0) {
-                console.log("Command:"+ command + ", Note:" + note + ",Velocity:" + velocity)
-                this.noteOn(command, note, velocity);
-            } else {
-                this.noteOff(note);
-            }
-        }
+        // if( command < 144) // Note Off messages for channels
+        // {
+        //     this.noteOff(note);
+        // }
+        // else if( command < 159) // Note channels
+        // {
+        //     if (velocity > 0) {
+        //         console.log("Command:"+ command + ", Note:" + note + ",Velocity:" + velocity)
+        //         this.noteOn(command, note, velocity);
+        //     } else {
+        //         this.noteOff(note);
+        //     }
+        // }
         else if(command === 248) // Timing clock message
         {
             this.clockHandler();
