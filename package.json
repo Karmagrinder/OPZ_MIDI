@@ -1,9 +1,11 @@
 {
-  "name": "midi_jaevel",
+  "name": "opz_midi",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://karmagrinder.github.io/OPZ_MIDI",
   "dependencies": {
     "bootstrap": "^4.2.1",
+    "gh-pages": "^2.0.1",
     "react": "^16.7.0",
     "react-bootstrap": "^1.0.0-beta.5",
     "react-circular-progressbar": "^1.0.0",
@@ -14,6 +16,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

@@ -201,13 +201,13 @@ class InstrumentsTrackHandler extends Component{
     }
 
     handleLfoShape(value){
-        if(value == 0){
+        if(value === 0){
             this.currentActiveTrack.shape = "Free";
         }
-        else if(value == 100){
+        else if(value === 100){
             this.currentActiveTrack.shape = "Trig";
         }
-        else if(value == 50){
+        else if(value === 50){
             this.currentActiveTrack.shape = "Sqr";
         }
         else if(value>0 && value<50){
