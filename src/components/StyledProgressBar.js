@@ -2,10 +2,16 @@ import React from "react";
 import CircularProgressbar from "react-circular-progressbar";
 import 'react-circular-progressbar/dist/styles.css';
 
+
 function StyledProgressbar(props) {
     var color = props.color;
+    var windowWidth = window.innerWidth;
+    //var windowHeight = window.height();
+    var sizeRatio = Math.ceil((windowWidth/100)*10);
+    var divSize = sizeRatio.toString() + "px";
+    
     return (
-        <div style={{ width: '85px', alignItems:'center', padding:'5px' }}>
+        <div style={{ width:divSize, alignItems:'center', padding:'5px' }}>
                 <CircularProgressbar
                     percentage={props.percentage}
                     text={props.text}
