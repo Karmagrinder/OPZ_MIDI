@@ -242,30 +242,30 @@ class InstrumentsTrackHandler extends Component{
             case 183:
                 trackId = 7;
                 break;
-            case 144:
-                trackId = 0;
-                break;
-            case 145:
-                trackId = 1;
-                break;
-            case 146:
-                trackId = 2;
-                break;
-            case 147:
-                trackId = 3;
-                break;
-            case 148:
-                trackId = 4;
-                break;
-            case 149:
-                trackId = 5;
-                break;
-            case 150:
-                trackId = 6;
-                break;
-            case 151:
-                trackId = 7;
-                break;
+            // case 144:
+            //     trackId = 0;
+            //     break;
+            // case 145:
+            //     trackId = 1;
+            //     break;
+            // case 146:
+            //     trackId = 2;
+            //     break;
+            // case 147:
+            //     trackId = 3;
+            //     break;
+            // case 148:
+            //     trackId = 4;
+            //     break;
+            // case 149:
+            //     trackId = 5;
+            //     break;
+            // case 150:
+            //     trackId = 6;
+            //     break;
+            // case 151:
+            //     trackId = 7;
+            //     break;
             default:
                 trackId = 0;
                 break;
