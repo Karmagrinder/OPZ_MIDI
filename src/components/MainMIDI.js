@@ -168,10 +168,10 @@ class MainMIDI extends Component{
         //         this.noteOff(note);
         //     }
         // }
-        else if(command === 248) // Timing clock message
-        {
-            this.clockHandler();
-        }
+        // else if(command === 248) // Timing clock message
+        // {
+        //     this.clockHandler();
+        // }
 
     }
     
