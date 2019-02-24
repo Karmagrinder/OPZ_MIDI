@@ -1,16 +1,16 @@
 {
-  "main.css": "/OPZ_MIDI/static/css/main.338709ce.chunk.css",
-  "main.js": "/OPZ_MIDI/static/js/main.0dddd1a8.chunk.js",
-  "main.js.map": "/OPZ_MIDI/static/js/main.0dddd1a8.chunk.js.map",
+  "main.css": "/OPZ_MIDI/static/css/main.99a5a68b.chunk.css",
+  "main.js": "/OPZ_MIDI/static/js/main.30c4f52a.chunk.js",
+  "main.js.map": "/OPZ_MIDI/static/js/main.30c4f52a.chunk.js.map",
   "runtime~main.js": "/OPZ_MIDI/static/js/runtime~main.3cbafe98.js",
   "runtime~main.js.map": "/OPZ_MIDI/static/js/runtime~main.3cbafe98.js.map",
   "static/css/2.91d0b1ff.chunk.css": "/OPZ_MIDI/static/css/2.91d0b1ff.chunk.css",
-  "static/js/2.39f11429.chunk.js": "/OPZ_MIDI/static/js/2.39f11429.chunk.js",
-  "static/js/2.39f11429.chunk.js.map": "/OPZ_MIDI/static/js/2.39f11429.chunk.js.map",
+  "static/js/2.41cc0ef4.chunk.js": "/OPZ_MIDI/static/js/2.41cc0ef4.chunk.js",
+  "static/js/2.41cc0ef4.chunk.js.map": "/OPZ_MIDI/static/js/2.41cc0ef4.chunk.js.map",
   "index.html": "/OPZ_MIDI/index.html",
-  "precache-manifest.e0669b39d64039eb0d47d5dc43a800e6.js": "/OPZ_MIDI/precache-manifest.e0669b39d64039eb0d47d5dc43a800e6.js",
+  "precache-manifest.493bef15fe8e386ff52c779c7e824c49.js": "/OPZ_MIDI/precache-manifest.493bef15fe8e386ff52c779c7e824c49.js",
   "service-worker.js": "/OPZ_MIDI/service-worker.js",
   "static/css/2.91d0b1ff.chunk.css.map": "/OPZ_MIDI/static/css/2.91d0b1ff.chunk.css.map",
-  "static/css/main.338709ce.chunk.css.map": "/OPZ_MIDI/static/css/main.338709ce.chunk.css.map",
+  "static/css/main.99a5a68b.chunk.css.map": "/OPZ_MIDI/static/css/main.99a5a68b.chunk.css.map",
   "static/media/opz_dails.png": "/OPZ_MIDI/static/media/opz_dails.fbb7093a.png"
 }
