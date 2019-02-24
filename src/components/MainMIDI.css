@@ -1,10 +1,11 @@
 .OutputModule{
-   background-color: rgb(100, 100, 100);
+  background-color: rgb(100, 100, 100);
   color: rgb(145, 145, 145);;
-  align-items: center;  
+  align-items: center;
+  vertical-align: middle;   
 }
 
 .DeviceDetails{
-  padding: '2px';
-  height: '15px';
+  align-items: center;
+  vertical-align: middle;
 }

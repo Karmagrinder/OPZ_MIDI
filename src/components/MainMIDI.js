@@ -56,24 +56,27 @@ class MainMIDI extends Component{
         this.setState({
             ModuleOutput:
                 <div className="OutputModule"> 
-                    <Card bg='dark' style={{ height: '34px' }}>
-                        <Container>
-                            <Row>
-                                <Col xs={2}>
-                                    {this.state.midiAccessDisplay}                                        
-                                </Col>
-                                <Col xs={2}>
-                                    {this.state.modeDisplay}                                        
-                                </Col>
-                                <Col xs={8}>
-                                    <div>
-                                        <b>Device:</b> {this.deviceName} &nbsp;<b>ID:</b>{this.deviceId} &nbsp;<b>Clock:</b> {this.state.clock}
-                                    </div>
-                                </Col>
-                            </Row>
-                        </Container>
-                        
-                    </Card>
+                    <div>
+                        <Card bg='dark'>
+                            <div className="DeviceDetails">
+                                <Container>
+                                    <Row>
+                                        <Col xs={2}>
+                                            {this.state.midiAccessDisplay}
+                                        </Col>
+                                        <Col xs={2}>
+                                            {this.state.modeDisplay}
+                                        </Col>
+                                        <Col xs={8}>
+                                            <div>
+                                                <b>Device:</b> {this.deviceName} &nbsp;<b>ID:</b>{this.deviceId} &nbsp;<b>Clock:</b> {this.state.clock}
+                                            </div>
+                                        </Col>
+                                    </Row>
+                                </Container>
+                            </div>
+                        </Card>
+                    </div>
                     <div>
                         <span>
                             {this.instrumetComponentEnable && <InstrumentTrackComponent message={this.midiMessage} />}
