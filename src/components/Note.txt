@@ -14,3 +14,29 @@ target: MIDIInput {onmidimessage: ƒ, connection: "open", id: "-108915792", manu
 timeStamp: 210824.8349999999
 type: "midimessage"
 __proto__: MIDIMessageEvent
+
+
+
+// ICONS
+Tape: MdVoicemail, IoIosRecording, GiAudioCassette
+Video: MdCameraRoll
+Lead: MdAudiotrack 
+Lights: MdWbIncandescent
+Parameters: MdTune , IoMdOptions, FiSliders, GiRoundKnob, GiSpeedometer
+Performance: MdAccessibility, IoIosBody
+Component: MdExtension, FiCpu
+MdReorder, IoMdAnalytics, IoMdPulse, GoPulse, GiBigGear, GiAquarius, GiJackPlug, 
+GiMicrophone, GiOldMicrophone, GiZigzagHieroglyph, GiViolin
+LFO: IoIosAnalytics
+Settings: IoIosCog
+Envelope: IoIosPodium, IoIosStats
+Chord: IoMdMusicalNotes, GiMusicalNotes, GiPianoKeys
+Arp: GoKebabHorizontal, GiMusicalScore
+Bass: GoBold
+Filter: FiFilter
+Triangle: FiTriangle, GiPrivate
+Snare: GiDrum
+HiHat: GiFrisbee
+Samples: GiOpenFolder,GiPalisade, GiSoundWaves
+Kick: GiPeach
+Square: GiSquare

@@ -130,13 +130,13 @@ class MainMIDI extends Component{
 
     getMIDIMessage(message) {
         var command = message.data[0];
-        var note = message.data[1];
-        var velocity = (message.data.length > 2) ? message.data[2] : 0; // a velocity value might not be included with a noteOff command
-
-        if(command !== 248)  // 248 is the clock message.
-        {
-            console.log("Command:"+ command + ", Note:" + note + ",Velocity:" + velocity)
-        }
+        
+        // if(command !== 248)  // 248 is the clock message.
+        // {   
+        //    var note = message.data[1];
+        //     var velocity = (message.data.length > 2) ? message.data[2] : 0; // a velocity value might not be included with a noteOff command
+        //     console.log("Command:"+ command + ", Note:" + note + ",Velocity:" + velocity)
+        // }
 
         if(command === 250){ // Play button
             this.setDeviceMode(true);
