@@ -11,7 +11,8 @@
     "react-circular-progressbar": "^1.0.0",
     "react-dom": "^16.7.0",
     "react-icons": "^3.4.0",
-    "react-scripts": "^2.1.5"
+    "react-scripts": "^2.1.5",
+    "react-tabs": "^3.0.0"
   },
   "scripts": {
     "start": "react-scripts start",

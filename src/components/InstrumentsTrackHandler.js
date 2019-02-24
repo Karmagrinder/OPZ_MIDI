@@ -1,15 +1,17 @@
 import React, {Component} from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './InstrumentsTrackHandler.css';
-import InstrumentTrack from './InstrumentTrack';
+//import InstrumentTrack from './InstrumentTrack';
 //import {Nav} from 'react-bootstrap/Nav';
+import TrackTabs from './Tabs';
 
 class InstrumentsTrackHandler extends Component{
     constructor(props, ref){
         super(props, ref);
-        this.instrumentTracks = []
-        this.trackNames = ["Kick", "Snare", "HiHat", "Samples", "Bass", "Lead", "Arp", "Chord"]
-        this.currentActiveTrack = {}
+        this.instrumentTracks = [];
+        this.trackNames = ["Kick", "Snare", "HiHat", "Samples", "Bass", "Lead", "Arp", "Chord"];
+        this.currentActiveTrack = {};
+        this.activeTrackIndex = 0;
 
         this.parseMessage = this.parseMessage.bind(this);
         this.handleMessage = this.handleMessage.bind(this);
@@ -56,7 +58,7 @@ class InstrumentsTrackHandler extends Component{
         return (
             <div>
                 <div>
-                    <InstrumentTrack track={this.currentActiveTrack}/>
+                    <TrackTabs tracks={this.instrumentTracks} activeTrack={this.activeTrackIndex}/>
                 </div>
             </div>
         );       
@@ -76,11 +78,11 @@ class InstrumentsTrackHandler extends Component{
         var note = message.data[1];
         var velocity = (message.data.length > 2) ? message.data[2] : 0; // a velocity value might not be included with a noteOff command
         var trackId = this.getTrackId(command);
+        this.activeTrackIndex = trackId;
         this.setActiveTrack(trackId);
         if (command > 175 && command < 184){
             this.midiCC(note, velocity);
-        }              
-        
+        }
         this.saveActiveTrack(trackId);
     }
 
