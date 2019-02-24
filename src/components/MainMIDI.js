@@ -6,6 +6,10 @@ import InstrumentTrackComponent from './InstrumentsTrackHandler';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import {TiMediaPlay} from 'react-icons/ti';
+import {IconContext} from 'react-icons';
+import {TiMediaStop} from 'react-icons/ti';
+import {TiPower} from 'react-icons/ti'; 
 
 class MainMIDI extends Component{
 
@@ -21,7 +25,8 @@ class MainMIDI extends Component{
             clock:1,
             channel:1,
             note:"C",
-            velocity:0
+            velocity:0,
+            modeDisplay: "",
         };
 
         this.midiMessage = "";
@@ -37,6 +42,7 @@ class MainMIDI extends Component{
         this.noteOff = this.noteOff.bind(this);
         this.clockHandler = this.clockHandler.bind(this);
         this.updateOutPut = this.updateOutPut.bind(this);
+        this.setDeviceMode = this.setDeviceMode.bind(this);
     };
 
     
@@ -50,26 +56,23 @@ class MainMIDI extends Component{
         this.setState({
             ModuleOutput:
                 <div className="OutputModule"> 
-                    <Card bg='dark' style={{ height: '5rem' }}>
-                        <Card.Body>
-                            <Container>
-                                <Row>
-                                    <Col>
-                                        <div style={{width:'70px', padding:'2px'}}>
-                                            {this.state.midiAccessDisplay}
-                                        </div>
-                                    </Col>
-                                    <Col>
-                                        <div className="DeviceDetails">
-                                            <b>Device:</b> {this.deviceName} &nbsp;<b>ID:</b> {this.deviceId}
-                                            <br/>
-                                            <b>Clock:</b> {this.state.clock}
-                                        </div>
-                                    </Col>
-                                </Row>
-                            </Container>
-                        </Card.Body>
-
+                    <Card bg='dark' style={{ height: '34px' }}>
+                        <Container>
+                            <Row>
+                                <Col xs={2}>
+                                    {this.state.midiAccessDisplay}                                        
+                                </Col>
+                                <Col xs={2}>
+                                    {this.state.modeDisplay}                                        
+                                </Col>
+                                <Col xs={8}>
+                                    <div>
+                                        <b>Device:</b> {this.deviceName} &nbsp;<b>ID:</b>{this.deviceId} &nbsp;<b>Clock:</b> {this.state.clock}
+                                    </div>
+                                </Col>
+                            </Row>
+                        </Container>
+                        
                     </Card>
                     <div>
                         <span>
@@ -91,7 +94,11 @@ class MainMIDI extends Component{
             inputs: midiAccess.inputs,
             outputs: midiAccess.outputs,
             displayMessage: "This browser supports MIDI input",
-            midiAccessDisplay: <Card bg='success' text='dark'> [I] </Card>
+            midiAccessDisplay: <IconContext.Provider value={{ color: "green", className: "global-class-name" }}>
+                                    <div style={{padding:'2px'}}>
+                                        <TiPower size={25}/>
+                                    </div>
+                                </IconContext.Provider>
          });
 
          for(var input of midiAccess.inputs.values()){
@@ -109,23 +116,36 @@ class MainMIDI extends Component{
         this.setState({
             midiAccessSuccess: false,
             displayMessage: "WebMIDI is not supported by this browser",
-            midiAccessDisplay: <Card bg='danger' text='dark'> [0] </Card>
+            midiAccessDisplay: <IconContext.Provider value={{ color: "red", className: "global-class-name" }}>
+                                    <div style={{padding:'2px'}}>
+                                        <TiPower size={25}/>
+                                    </div>
+                                </IconContext.Provider>
         });
         console.log('WebMIDI is not supported by this browser.');
     }
 
     getMIDIMessage(message) {
         var command = message.data[0];
-        //var note = message.data[1];
-        //var velocity = (message.data.length > 2) ? message.data[2] : 0; // a velocity value might not be included with a noteOff command
+        var note = message.data[1];
+        var velocity = (message.data.length > 2) ? message.data[2] : 0; // a velocity value might not be included with a noteOff command
 
-        // if(command !== 248)
-        // {
-        //     console.log("Command:"+ command + ", Note:" + note + ",Velocity:" + velocity)
-        // }
+        if(command !== 248)  // 248 is the clock message.
+        {
+            console.log("Command:"+ command + ", Note:" + note + ",Velocity:" + velocity)
+        }
+
+        if(command === 250){ // Play button
+            this.setDeviceMode(true);
+        }
+        if(command === 252){  // Stop button
+            this.setDeviceMode(false);
+        }
 
         //if(command >175 && command<184){
-        if ((command > 143 && command < 152) || (command > 175 && command < 184)){
+        //if ((command > 143 && command < 152) || (command > 175 && command < 184)){
+        if (command > 175 && command < 184) {
+
             this.midiMessage = message;
             this.instrumetComponentEnable = true;
             //console.log("Command:"+ command + ", Note:" + note + ",Velocity:" + velocity);
@@ -189,6 +209,29 @@ class MainMIDI extends Component{
 
         }
         this.updateOutPut();
+    }
+
+    setDeviceMode(playMode){
+        var modeDisplay = ""
+        if(playMode === true){
+        
+            modeDisplay = <IconContext.Provider value={{ color: "green", className: "global-class-name" }}>
+                            <div style={{ padding:'2px' }}>
+                                <TiMediaPlay size={25}/>
+                            </div>
+                        </IconContext.Provider>;
+        }
+        else{
+
+            modeDisplay = <IconContext.Provider value={{ color: "grey", className: "global-class-name" }}>
+                            <div style={{ padding: '2px' }}>
+                                <TiMediaStop size={25}/>
+                            </div>
+                        </IconContext.Provider>;
+        }
+        this.setState({
+            modeDisplay: modeDisplay
+        });
     }
 
 
