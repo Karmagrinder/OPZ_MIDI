@@ -58,7 +58,7 @@ class InstrumentsTrackHandler extends Component{
         return (
             <div>
                 <div>
-                    <TrackTabs tracks={this.instrumentTracks} activeTrack={this.activeTrackIndex}/>
+                    <TrackTabs tracks={this.instrumentTracks} activeTrack={this.activeTrackIndex} autoTrigger={true}/>
                 </div>
             </div>
         );       
