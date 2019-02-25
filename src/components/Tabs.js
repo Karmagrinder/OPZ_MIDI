@@ -2,6 +2,7 @@ import React,{Component} from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import "react-tabs/style/react-tabs.css";
 import InstrumentTrack from './InstrumentTrack';
+import GetIcon from './GetIcons';
 
 
 class TrackTabs extends Component{
@@ -43,7 +44,7 @@ class TrackTabs extends Component{
         }
 
         var tabList = allTracks.map((track) =>
-            <Tab key={track.trackName + 'Tab'}>{track.trackName}</Tab>
+            <Tab key={track.trackName + 'Tab'}><GetIcon itemName={track.trackName}/></Tab>
         );
 
         var tabPanels = allTracks.map((track) =>
@@ -66,7 +67,6 @@ class TrackTabs extends Component{
 
 
     render(props) {
-        //this.autoTrigger = this.props.autoTrigger;
         return(
           <div>{this.renderOutput(this.props.tracks)}</div>  
         );

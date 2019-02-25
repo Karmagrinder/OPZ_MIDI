@@ -5,10 +5,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './InstrumentsTrackHandler.css';
 import Card from 'react-bootstrap/Card';
 import StyledProgressbar from './StyledProgressBar';
-import { MdSettingsInputComponent, MdAudiotrack} from 'react-icons/md';
-import { IoIosAnalytics, IoIosStats, IoMdOptions, IoMdMusicalNotes} from 'react-icons/io';
-import {GiPeach, GiDrum, GiFrisbee, GiSoundWaves } from 'react-icons/gi';
-import {GoBold, GoKebabHorizontal} from 'react-icons/go';
+import { MdSettingsInputComponent} from 'react-icons/md';
+import { IoIosAnalytics, IoIosStats, IoMdOptions} from 'react-icons/io';
+
 
 //colors
 const green = "#039C53";
@@ -19,62 +18,10 @@ const red = "#C62937";
 //const opzGrey = "#646464";
 const purple = "#9e66c1";
 
-function getTrackIcon(trackName){
-    var trackIcon = "";
-    switch (trackName){
-        case "Kick":
-            trackIcon = <div>
-                            <GiPeach size={25} /> Kick
-                        </div>                
-            break;
-        case "Snare":        
-                trackIcon = <div>
-                                <GiDrum size={25}/> Snare
-                            </div>
-            break;
-        case "HiHat":
-            trackIcon = 
-                        <div>
-                            <GiFrisbee size={25} /> HiHat
-                        </div>
-            break;
-        case "Samples":
-            trackIcon = <div>
-                            <GiSoundWaves size={25} /> Samples
-                        </div>
-            break;
-        case "Bass":
-            trackIcon = <div>
-                            <GoBold size={25} /> Bass
-                        </div>
-            break;
-        case "Lead":
-            trackIcon = <div>
-                            <MdAudiotrack size={25} /> Lead
-                        </div>
-            break;
-        case "Arp":
-            trackIcon = <div>
-                            <GoKebabHorizontal size={25} /> Arp
-                        </div>
-            break;
-        case "Chord":
-            trackIcon = <div>
-                            <IoMdMusicalNotes size={25} /> Chord
-                        </div>
-            break;
-        default:
-            break;
-    }
-    return trackIcon;    
-}
-
-
 function InstrumentTrack(props){
     return (
         <div className="Instrument-tracks-component">
             <Card bg='dark' style={{ color: blue}} >
-                <Card.Title>{getTrackIcon(props.track.trackName)}</Card.Title>
                 <Card bg="dark" text='white'>
                     <Row>
                         <Col><Card.Title><IoMdOptions size={25}/></Card.Title></Col>
