@@ -1,26 +1,17 @@
 import React, {Component} from 'react'
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './InstrumentsTrackHandler.css';
-import Card from 'react-bootstrap/Card';
-import StyledProgressbar from './StyledProgressBar';
-
-//colors
-const green = "#039C53";
-const blue = "#0388C0";
-const yellow = "#DCA71B";
-const red = "#C62937";
-//const grey = "#787878";
-//const opzGrey = "#646464";
-const purple = "#9e66c1";
+//import InstrumentTrack from './InstrumentTrack';
+//import {Nav} from 'react-bootstrap/Nav';
+import TrackTabs from './Tabs';
 
 class InstrumentsTrackHandler extends Component{
     constructor(props, ref){
         super(props, ref);
-        this.instrumentTracks = []
-        this.trackNames = ["Kick", "Snare", "HiHat", "Samples", "Bass", "Lead", "Arp", "Chord"]
-        this.currentActiveTrack = {}
+        this.instrumentTracks = [];
+        this.trackNames = ["Kick", "Snare", "HiHat", "Samples", "Bass", "Lead", "Arp", "Chord"];
+        this.currentActiveTrack = {};
+        this.activeTrackIndex = 0;
 
         this.parseMessage = this.parseMessage.bind(this);
         this.handleMessage = this.handleMessage.bind(this);
@@ -65,50 +56,12 @@ class InstrumentsTrackHandler extends Component{
 
     moduleOutput(){
         return (
-            <div className="Instrument-tracks-component">                
-                <Card bg='dark' text='info'>
-                    <Card.Title>{this.currentActiveTrack.trackName}</Card.Title>
-                    <Card bg="dark" text='white'>
-                        <Row>
-                            <Col><Card.Title>Parameters</Card.Title></Col>
-                            <Col><StyledProgressbar percentage={this.currentActiveTrack.p1} text={`P1:${this.currentActiveTrack.p1}`} color={green} /></Col>
-                            <Col><StyledProgressbar percentage={this.currentActiveTrack.p2} text={`P2:${this.currentActiveTrack.p2}`} color={blue} /></Col>
-                            <Col><StyledProgressbar percentage={this.currentActiveTrack.filter} text={`Filter:${this.currentActiveTrack.filter}`} color={yellow} /></Col>
-                            <Col><StyledProgressbar percentage={this.currentActiveTrack.resonance} text={`Reso:${this.currentActiveTrack.resonance}`} color={red} /></Col>
-                        </Row>
-                    </Card>
-                    <Card bg="dark" text='success'  >
-                        <Row>
-                            <Col><Card.Title>Envelope</Card.Title></Col>
-                            <Col><StyledProgressbar percentage={this.currentActiveTrack.attack} text={`A:${this.currentActiveTrack.attack}`} color={green} /></Col>
-                            <Col><StyledProgressbar percentage={this.currentActiveTrack.decay} text={`D:${this.currentActiveTrack.decay}`} color={blue} /></Col>
-                            <Col><StyledProgressbar percentage={this.currentActiveTrack.sustain} text={`S:${this.currentActiveTrack.sustain}`} color={yellow} /></Col>
-                            <Col><StyledProgressbar percentage={this.currentActiveTrack.release} text={`R:${this.currentActiveTrack.release}`} color={red} /></Col>
-                        </Row>
-                    </Card>
-                    <Card bg="dark" style={{ color: purple }}  >
-                        <Row>
-                            <Col><Card.Title>LFO</Card.Title></Col>
-                            <Col><StyledProgressbar percentage={this.currentActiveTrack.depth} text={`Depth:${this.currentActiveTrack.depth}`} color={green} /></Col>
-                            <Col><StyledProgressbar percentage={this.currentActiveTrack.rate} text={`Rate:${this.currentActiveTrack.rate}`} color={blue} /></Col>
-                            <Col><StyledProgressbar percentage={this.currentActiveTrack.dest} text={`Target:${this.currentActiveTrack.dest}`} color={yellow} /></Col>
-                            <Col><StyledProgressbar percentage={this.currentActiveTrack.shapeVal} text={`${this.currentActiveTrack.shape}`} color={red} /></Col>
-                        </Row>
-                    </Card>
-                    <Card bg="dark" style={{ color: yellow }}  >
-                        <Row>
-                            <Col><Card.Title>Master</Card.Title></Col>
-                            <Col><StyledProgressbar percentage={this.currentActiveTrack.fx1} text={`Fx1:${this.currentActiveTrack.fx1}`} color={green} /></Col>
-                            <Col><StyledProgressbar percentage={this.currentActiveTrack.fx2} text={`Fx2:${this.currentActiveTrack.fx2}`} color={blue} /></Col>
-                            <Col><StyledProgressbar percentage={this.currentActiveTrack.pan} text={`Pan:${this.currentActiveTrack.pan}`} color={yellow} /></Col>
-                            <Col><StyledProgressbar percentage={this.currentActiveTrack.level} text={`Level:${this.currentActiveTrack.level}`} color={red} /></Col>
-                        </Row>
-                    </Card>
-                </Card>                
+            <div>
+                <div>
+                    <TrackTabs tracks={this.instrumentTracks} activeTrack={this.activeTrackIndex} autoTrigger={true}/>
+                </div>
             </div>
-        );
-        
-                 
+        );       
     }
 
     
@@ -125,11 +78,11 @@ class InstrumentsTrackHandler extends Component{
         var note = message.data[1];
         var velocity = (message.data.length > 2) ? message.data[2] : 0; // a velocity value might not be included with a noteOff command
         var trackId = this.getTrackId(command);
+        this.activeTrackIndex = trackId;
         this.setActiveTrack(trackId);
         if (command > 175 && command < 184){
             this.midiCC(note, velocity);
-        }              
-        
+        }
         this.saveActiveTrack(trackId);
     }
 
