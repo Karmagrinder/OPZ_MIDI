@@ -44,7 +44,9 @@ class TrackTabs extends Component{
         }
 
         var tabList = allTracks.map((track) =>
-            <Tab key={track.trackName + 'Tab'}><GetIcon iconName={track.trackName} size={30} color="#000000"/></Tab>
+            <Tab key={track.trackName + 'Tab'}>
+                <GetIcon iconName={track.trackName} size={30} color="#000000"/>
+            </Tab>
         );
 
         var tabPanels = allTracks.map((track) =>
