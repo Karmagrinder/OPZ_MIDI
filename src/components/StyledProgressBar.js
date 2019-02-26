@@ -7,7 +7,7 @@ function StyledProgressbar(props) {
     var color = props.color;
     var windowWidth = window.innerWidth;
     //var windowHeight = window.height();
-    var sizeRatio = Math.ceil((windowWidth/100)*10);
+    var sizeRatio = Math.ceil((windowWidth/100)*9.5);
     var divSize = sizeRatio.toString() + "px";
     
     return (
@@ -17,7 +17,7 @@ function StyledProgressbar(props) {
                     text={props.text}
                     // Path width must be customized with strokeWidth,
                     // since it informs dimension calculations.
-                    strokeWidth={8}
+                    strokeWidth={9}
                     // You can override styles either by specifying this "styles" prop,
                     // or by overriding the default CSS here:
                     // https://github.com/iqnivek/react-circular-progressbar/blob/master/src/styles.css
@@ -41,9 +41,9 @@ function StyledProgressbar(props) {
                         // Customize the text
                         text: {
                             // Tweak text color:
-                            fill: "#f88",
+                            fill: "#fff600",
                             // Tweak text size:
-                            fontSize: "16px",                            
+                            fontSize: "17px",                            
                         }
                     }}
                 />
