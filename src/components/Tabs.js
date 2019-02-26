@@ -2,7 +2,6 @@ import React,{Component} from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import "react-tabs/style/react-tabs.css";
 import InstrumentTrack from './InstrumentTrack';
-//import GetIcon from './GetIcons';
 import GetIcon from './IconsLib';
 
 
@@ -45,7 +44,7 @@ class TrackTabs extends Component{
         }
 
         var tabList = allTracks.map((track) =>
-            <Tab key={track.trackName + 'Tab'}><GetIcon iconName={track.trackName} color="#000000"/></Tab>
+            <Tab key={track.trackName + 'Tab'}><GetIcon iconName={track.trackName} size={30} color="#000000"/></Tab>
         );
 
         var tabPanels = allTracks.map((track) =>
