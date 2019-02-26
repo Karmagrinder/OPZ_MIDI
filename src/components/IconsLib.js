@@ -136,14 +136,21 @@ function getPathKey(label){
     }
     return path;
 }
+//stroke={fillColor} 
 
 function GetIcon(props){
     var size = props.size;
     var pathVal = getPathKey(props.iconName);
     var fillColor = props.color;
+    var stroke_width = props.strokeWidth;
     var icon= <svg  width={size} height={size} viewBox="0 0 300 300">
-        <path stroke={fillColor} strokeWidth={2} d={pathVal}></path>
-        </svg>
+            <g fill={fillColor} stroke={fillColor}>
+                    <path 
+                        strokeWidth={stroke_width} 
+                        d={pathVal}>
+                    </path>
+                </g>
+            </svg>
 
     return icon;    
 }
