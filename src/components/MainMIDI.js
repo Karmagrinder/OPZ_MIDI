@@ -77,7 +77,7 @@ class MainMIDI extends Component{
                                         </Col>
                                         <Col xs={8}>
                                             <div>
-                                                <b>Device:</b> {this.deviceName} &nbsp;<b>ID:</b>{this.deviceId} &nbsp;<b>Clock:</b> {this.state.clock}
+                                                <b>Device:</b> {this.deviceName} &nbsp;<b>ID:</b>{this.deviceId}
                                             </div>
                                         </Col>
                                     </Row>
@@ -105,7 +105,7 @@ class MainMIDI extends Component{
             inputs: midiAccess.inputs,
             outputs: midiAccess.outputs,
             displayMessage: "This browser supports MIDI input",
-            midiAccessDisplay: <GetIcon iconName="MIDI" size={30} color={green} />
+            midiAccessDisplay: <GetIcon iconName="MIDI" size={30} strokeWidth={7} color={green} />
          });
 
          for(var input of midiAccess.inputs.values()){
