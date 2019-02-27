@@ -228,6 +228,11 @@ class MainMIDI extends Component{
 
 
     render(){
+        if(this.state.ModuleOutput === ""){
+            return(
+                <Card bg='dark' text='info'> Click the dial above for help, or turn one of the dials on OP-Z.</Card>
+            );
+        }
         return (
             this.Output()
          ); 
