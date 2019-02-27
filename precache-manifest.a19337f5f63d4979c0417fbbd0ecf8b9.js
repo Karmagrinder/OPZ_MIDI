@@ -20,7 +20,7 @@ self.__precacheManifest = [
     "url": "/OPZ_MIDI/static/css/2.7dcee7f3.chunk.css"
   },
   {
-    "revision": "2fad6df5c405278cd3090b9ae76a9e83",
+    "revision": "0dba67902e3a4fb400d3ea9bba05a121",
     "url": "/OPZ_MIDI/index.html"
   }
 ];

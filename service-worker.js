@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/OPZ_MIDI/precache-manifest.e80898f770cfcba8838468f91eb42656.js"
+  "/OPZ_MIDI/precache-manifest.a19337f5f63d4979c0417fbbd0ecf8b9.js"
 );
 
 workbox.clientsClaim();
