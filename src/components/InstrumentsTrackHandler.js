@@ -1,8 +1,6 @@
 import React, {Component} from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './InstrumentsTrackHandler.css';
-//import InstrumentTrack from './InstrumentTrack';
-//import {Nav} from 'react-bootstrap/Nav';
 import TrackTabs from './Tabs';
 
 class InstrumentsTrackHandler extends Component{
@@ -85,9 +83,6 @@ class InstrumentsTrackHandler extends Component{
         }
         this.saveActiveTrack(trackId);
     }
-
-    
-
 
     midiCC(note, velocity){
         switch(note){
