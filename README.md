@@ -6,7 +6,7 @@ This app will function only on web-browsers that support Web-MIDI. I recomend us
 [ReleaseNotes](ReleaseNotes.md)
 
 ## Demo
-YouTube link: https://youtu.be/kuoQAp6DrUc 
+YouTube link: https://youtu.be/EJUnH2G9MDI
 
 ## Setup
 App URL:  https://karmagrinder.github.io/OPZ_MIDI/
