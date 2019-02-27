@@ -10,9 +10,9 @@
 4) Layout improvements. 
 
 ### Screenshots: 
- 1) ![Screenshot1](src\assets\screenshots\AppScreenShot1.png)
- 2) ![Screenshot2](src\assets\screenshots\AppScreenShot2.png)
- 3) ![Screenshot3](src\assets\screenshots\AppScreenShot3.png)
+ 1) ![Screenshot1](src/assets/screenshots/AppScreenShot1.png)
+ 2) ![Screenshot2](src/assets/screenshots/AppScreenShot2.png)
+ 3) ![Screenshot3](src/assets/screenshots/AppScreenShot3.png)
 
 ### Demo
  YoutubeLink: 
