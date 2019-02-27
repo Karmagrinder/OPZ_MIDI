@@ -3,7 +3,8 @@ This app reads the MIDI messages sent by OP-Z and displays them. This is helpful
 This app will function only on web-browsers that support Web-MIDI. I recomend using latest version of Chrome browser.
 
 ## Release notes:
-![ReleaseNotes](ReleaseNotes.md)
+[ReleaseNotes](ReleaseNotes.md)
+
 ## Demo
 YouTube link: https://youtu.be/kuoQAp6DrUc 
 
