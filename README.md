@@ -2,6 +2,9 @@
 This app reads the MIDI messages sent by OP-Z and displays them. This is helpful if you want to note down the the parameter settings. 
 This app will function only on web-browsers that support Web-MIDI. I recomend using latest version of Chrome browser.
 
+## Release notes:
+![ReleaseNotes](ReleaseNotes.md)
+
 ## Setup
 App URL:  https://karmagrinder.github.io/OPZ_MIDI/
 
