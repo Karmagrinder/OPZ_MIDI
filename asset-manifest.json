@@ -1,16 +1,15 @@
 {
   "main.css": "/OPZ_MIDI/static/css/main.99a5a68b.chunk.css",
-  "main.js": "/OPZ_MIDI/static/js/main.dcabc3d4.chunk.js",
-  "main.js.map": "/OPZ_MIDI/static/js/main.dcabc3d4.chunk.js.map",
+  "main.js": "/OPZ_MIDI/static/js/main.7e301168.chunk.js",
+  "main.js.map": "/OPZ_MIDI/static/js/main.7e301168.chunk.js.map",
   "runtime~main.js": "/OPZ_MIDI/static/js/runtime~main.3cbafe98.js",
   "runtime~main.js.map": "/OPZ_MIDI/static/js/runtime~main.3cbafe98.js.map",
   "static/css/2.7dcee7f3.chunk.css": "/OPZ_MIDI/static/css/2.7dcee7f3.chunk.css",
   "static/js/2.27393002.chunk.js": "/OPZ_MIDI/static/js/2.27393002.chunk.js",
   "static/js/2.27393002.chunk.js.map": "/OPZ_MIDI/static/js/2.27393002.chunk.js.map",
   "index.html": "/OPZ_MIDI/index.html",
-  "precache-manifest.40b8c3b0f394ec019fee4b48c00a49f9.js": "/OPZ_MIDI/precache-manifest.40b8c3b0f394ec019fee4b48c00a49f9.js",
+  "precache-manifest.439966085b824898c7ed1dc21624a263.js": "/OPZ_MIDI/precache-manifest.439966085b824898c7ed1dc21624a263.js",
   "service-worker.js": "/OPZ_MIDI/service-worker.js",
   "static/css/2.7dcee7f3.chunk.css.map": "/OPZ_MIDI/static/css/2.7dcee7f3.chunk.css.map",
-  "static/css/main.99a5a68b.chunk.css.map": "/OPZ_MIDI/static/css/main.99a5a68b.chunk.css.map",
-  "static/media/opz_dails.png": "/OPZ_MIDI/static/media/opz_dails.fbb7093a.png"
+  "static/css/main.99a5a68b.chunk.css.map": "/OPZ_MIDI/static/css/main.99a5a68b.chunk.css.map"
 }
