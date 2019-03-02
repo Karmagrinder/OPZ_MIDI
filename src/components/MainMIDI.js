@@ -7,7 +7,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import GetIcon from './IconsLib';
-import FxTrackHandler from './FxTracksHandler'; 
+import NonInstrumentTrackHandler from './NonInstrumentTrackHandler'; 
 
 //colors
 const green = "#039C53";
@@ -96,7 +96,7 @@ class MainMIDI extends Component{
                     </div>
                     <div>
                         <span>
-                            {this.fxTrackComponentEnable && <FxTrackHandler message={this.midiMessage} />}
+                            {this.fxTrackComponentEnable && <NonInstrumentTrackHandler message={this.midiMessage} />}
                         </span>
                     </div>                                        
                 </div>

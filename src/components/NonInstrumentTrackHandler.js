@@ -10,7 +10,7 @@ const performanceEffects = ["Duck", "Filter Sweep", "Loop", "Stereo", "Loop1", "
 const blackKeys = [54, 56, 58, 61, 63, 66, 68, 70, 73, 75];
 const whiteKeys = [53, 55, 57, 59, 60, 62, 64, 65, 67, 69, 71, 72, 74, 76];
 
-class FxTrackHandler extends Component{
+class NonInstrumentTrackHandler extends Component{
     constructor(props, ref){
         super(props, ref);
         this.instrumentTracks = [];
@@ -216,4 +216,4 @@ class FxTrackHandler extends Component{
 
 }
 
-export default FxTrackHandler;
+export default NonInstrumentTrackHandler;

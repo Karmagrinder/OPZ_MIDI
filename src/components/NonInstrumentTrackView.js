@@ -131,10 +131,10 @@ function getTrackView(track) {
 }
 
 
-function FxTrackView(props){
+function NonInstrumentTrackView(props){
     return (
         getTrackView(props.track)
     );
 }
 
-export default FxTrackView;
+export default NonInstrumentTrackView;

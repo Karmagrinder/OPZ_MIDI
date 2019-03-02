@@ -3,7 +3,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import "react-tabs/style/react-tabs.css";
 import InstrumentTrackView from './InstrumentTrackView';
 import GetIcon from './IconsLib';
-import FxTrackView from './FxTrackView';
+import NonInstrumentTrackView from './NonInstrumentTrackView';
 
 
 class TrackTabs extends Component{
@@ -42,7 +42,7 @@ class TrackTabs extends Component{
                 output = <InstrumentTrackView track={track} />;
                 break;
             case "nonInstrument":
-                output = <FxTrackView track={track} />;
+                output = <NonInstrumentTrackView track={track} />;
                 break;
             default:
                 break;
