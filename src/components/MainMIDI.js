@@ -7,7 +7,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import GetIcon from './IconsLib';
-import FxTrackHandler from './FxTracks'; 
+import FxTrackHandler from './FxTracksHandler'; 
 
 //colors
 const green = "#039C53";
@@ -18,7 +18,9 @@ const grey = "#787878";
 //const opzGrey = "#646464";
 //const purple = "#9e66c1";
 //const pageIconSize = 35;
-//const white = "#ffffff"
+//const white = "#ffffff";
+
+const fxTrackCommands = [152, 153, 184, 185];
 
 class MainMIDI extends Component{
 
@@ -42,6 +44,7 @@ class MainMIDI extends Component{
         this.deviceName = "";
         this.deviceId = "";
         this.modeDisplay= "";
+        this.fxTrackComponentEnable = false;
 
         // Bind all the functions
         this.onMIDISuccess = this.onMIDISuccess.bind(this);
@@ -93,7 +96,7 @@ class MainMIDI extends Component{
                     </div>
                     <div>
                         <span>
-                            {this.instrumetComponentEnable && <FxTrackHandler message={this.midiMessage} />}
+                            {this.fxTrackComponentEnable && <FxTrackHandler message={this.midiMessage} />}
                         </span>
                     </div>                                        
                 </div>
@@ -157,6 +160,16 @@ class MainMIDI extends Component{
 
             this.midiMessage = message;
             this.instrumetComponentEnable = true;
+            //this.fxTrackComponentEnable = false;
+            //console.log("Command:"+ command + ", Note:" + note + ",Velocity:" + velocity);
+            this.updateOutput();
+        }
+
+        if (fxTrackCommands.includes(command)) {
+
+            this.midiMessage = message;
+            //this.instrumetComponentEnable = false;
+            this.fxTrackComponentEnable = true;
             //console.log("Command:"+ command + ", Note:" + note + ",Velocity:" + velocity);
             this.updateOutput();
         }

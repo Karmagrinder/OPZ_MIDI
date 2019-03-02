@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './InstrumentsTrackHandler.css';
 import TrackTabs from './Tabs';
 
+const trackType = "instrument";
 class InstrumentsTrackHandler extends Component{
     constructor(props, ref){
         super(props, ref);
@@ -56,7 +57,7 @@ class InstrumentsTrackHandler extends Component{
         return (
             <div>
                 <div>
-                    <TrackTabs tracks={this.instrumentTracks} activeTrack={this.activeTrackIndex} autoTrigger={true}/>
+                    <TrackTabs type={trackType} tracks={this.instrumentTracks} activeTrack={this.activeTrackIndex} autoTrigger={true}/>
                 </div>
             </div>
         );       

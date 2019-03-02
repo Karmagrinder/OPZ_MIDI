@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './InstrumentsTrackHandler.css';
 import TrackTabs from './Tabs';
 
+const trackType = "fx";
 class FxTrackHandler extends Component{
     constructor(props, ref){
         super(props, ref);
@@ -10,7 +11,7 @@ class FxTrackHandler extends Component{
         this.trackNames = ["Fx1", "Fx2"];
         this.currentActiveTrack = {};
         this.activeTrackIndex = 0;
-        this.timingVals = ["1:128", "1:6", "1:96", "2:16", "1:64", "3:16", "1:48", "1:32", 
+        this.timeSignatureVals = ["1:128", "1:6", "1:96", "2:16", "1:64", "3:16", "1:48", "1:32", 
             "4:16", "1:24", "5:16", "1:12", "1:6", "6:16", "1:3", "7:16", "1:2", "8:16",
             "1:1", "2:1", "9:16", "3:1", "10:16", "4:1"];
 
@@ -20,7 +21,7 @@ class FxTrackHandler extends Component{
         this.midiCC = this.midiCC.bind(this);
         this.setActiveTrack = this.setActiveTrack.bind(this);
         this.saveActiveTrack = this.saveActiveTrack.bind(this);
-        this.handleTimingKey = this.handleTimingKey.bind(this);
+        this.handleTimeSignatureKey = this.handleTimeSignatureKey.bind(this);
     };
 
     
@@ -32,7 +33,7 @@ class FxTrackHandler extends Component{
             p2: "",
             filter: "",
             resonance: "",
-            timing: ""            
+            timeSignature: ""            
         }
 
         var i;
@@ -47,7 +48,7 @@ class FxTrackHandler extends Component{
         return (
             <div>
                 <div>
-                    <TrackTabs tracks={this.instrumentTracks} activeTrack={this.activeTrackIndex} autoTrigger={true}/>
+                    <TrackTabs type={trackType} tracks={this.instrumentTracks} activeTrack={this.activeTrackIndex} autoTrigger={true}/>
                 </div>
             </div>
         );       
@@ -69,11 +70,11 @@ class FxTrackHandler extends Component{
         var trackId = this.getTrackId(command);
         this.activeTrackIndex = trackId;
         this.setActiveTrack(trackId);
-        if ((command === 184) && (command === 185)){
+        if ((command === 184) || (command === 185)){
             this.midiCC(note, velocity);
         }
-        if ((command === 152) && (command === 153)) {
-            this.handleTimingKey(note);
+        if ((command === 152) || (command === 153)) {
+            this.handleTimeSignatureKey(note);
         }
 
         this.saveActiveTrack(trackId);
@@ -99,7 +100,7 @@ class FxTrackHandler extends Component{
 
     }
 
-    handleTimingKey(note){
+    handleTimeSignatureKey(note){
         var keyIndex = note - 53;
         if(keyIndex < 0){
             keyIndex = 0;
@@ -107,7 +108,7 @@ class FxTrackHandler extends Component{
         if (keyIndex > 23) {
             keyIndex = 23;
         }        
-        this.currentActiveTrack.timing = this.timingVals[keyIndex];
+        this.currentActiveTrack.timeSignature = this.timeSignatureVals[keyIndex];
     }
 
     convertTo100Range(value){
@@ -121,6 +122,12 @@ class FxTrackHandler extends Component{
                 trackId = 0;
                 break;
             case 185:
+                trackId = 1;
+                break;
+            case 152:
+                trackId = 0;
+                break;
+            case 153:
                 trackId = 1;
                 break;
             default:
