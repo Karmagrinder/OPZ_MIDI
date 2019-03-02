@@ -20,7 +20,7 @@ const grey = "#787878";
 //const pageIconSize = 35;
 //const white = "#ffffff";
 
-const fxTrackCommands = [152, 153, 184, 185];
+const nonInstrumentTrackCommands = [152, 153, 154, 155, 156, 184, 185, 186, 187, 188];
 
 class MainMIDI extends Component{
 
@@ -165,7 +165,7 @@ class MainMIDI extends Component{
             this.updateOutput();
         }
 
-        if (fxTrackCommands.includes(command)) {
+        if (nonInstrumentTrackCommands.includes(command)) {
 
             this.midiMessage = message;
             //this.instrumetComponentEnable = false;

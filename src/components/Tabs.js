@@ -41,7 +41,7 @@ class TrackTabs extends Component{
             case "instrument":
                 output = <InstrumentTrackView track={track} />;
                 break;
-            case "fx":
+            case "nonInstrument":
                 output = <FxTrackView track={track} />;
                 break;
             default:

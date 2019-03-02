@@ -3,12 +3,18 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './InstrumentsTrackHandler.css';
 import TrackTabs from './Tabs';
 
-const trackType = "fx";
+const trackType = "nonInstrument";
+const midiCcCommands = [184, 185, 186, 187, 188]
+const performanceEffects = ["Duck", "Filter Sweep", "Loop", "Stereo", "Loop1", "Pitch", "Echo",
+                            "Fill", "Short", "Fill1", "Long", "Random"]
+const blackKeys = [54, 56, 58, 61, 63, 66, 68, 70, 73, 75];
+const whiteKeys = [53, 55, 57, 59, 60, 62, 64, 65, 67, 69, 71, 72, 74, 76];
+
 class FxTrackHandler extends Component{
     constructor(props, ref){
         super(props, ref);
         this.instrumentTracks = [];
-        this.trackNames = ["Fx1", "Fx2"];
+        this.trackNames = ["Fx1", "Fx2", "Tape", "Master", "Performance"];
         this.currentActiveTrack = {};
         this.activeTrackIndex = 0;
         this.timeSignatureVals = ["1:128", "1:6", "1:96", "2:16", "1:64", "3:16", "1:48", "1:32", 
@@ -22,9 +28,9 @@ class FxTrackHandler extends Component{
         this.setActiveTrack = this.setActiveTrack.bind(this);
         this.saveActiveTrack = this.saveActiveTrack.bind(this);
         this.handleTimeSignatureKey = this.handleTimeSignatureKey.bind(this);
-    };
-
-    
+        this.handlePerformanceEffect = this.handlePerformanceEffect.bind(this);
+        this.handleTapeBuffeSegments = this.handleTapeBuffeSegments.bind(this);
+    };    
 
     componentWillMount() {
         var trackTemplate = {
@@ -33,11 +39,15 @@ class FxTrackHandler extends Component{
             p2: "",
             filter: "",
             resonance: "",
-            timeSignature: ""            
+            timeSignature: "" ,
+            tapeBufferSegmentLength: 0,
+            tapeBufferSegment: 0,
+            // masterChordProgression: "",
+            performanceEffect: " "
         }
 
         var i;
-        for (i = 0; i <=1; i++) {
+        for (i = 0; i <=4; i++) {
             var newTrack = Object.create(trackTemplate);
             this.instrumentTracks.push(newTrack);
             this.instrumentTracks[i].trackName = this.trackNames[i];
@@ -70,11 +80,21 @@ class FxTrackHandler extends Component{
         var trackId = this.getTrackId(command);
         this.activeTrackIndex = trackId;
         this.setActiveTrack(trackId);
-        if ((command === 184) || (command === 185)){
+        if (midiCcCommands.includes(command)){  // MIDI CC messages
             this.midiCC(note, velocity);
         }
-        if ((command === 152) || (command === 153)) {
+        else if ((command === 152) || (command === 153)) {  // FX Track time signature
             this.handleTimeSignatureKey(note);
+        }
+
+        else if (command === 154){
+            this.handleTapeBuffeSegments(note);
+        }
+        // else if (command === 155) {     // Master Track Chord progression
+        //     this.handleMasterTrackChordProgression(note);
+        // }
+        else if (command === 156) {
+            this.handlePerformanceEffect(note);
         }
 
         this.saveActiveTrack(trackId);
@@ -111,6 +131,33 @@ class FxTrackHandler extends Component{
         this.currentActiveTrack.timeSignature = this.timeSignatureVals[keyIndex];
     }
 
+    handlePerformanceEffect(note){
+        var index = 0;
+        if(note < 113){ //Drum section effects (101 - 112)
+            index = note-101;
+            if((index<0)||(index>12)){
+                index = 0;
+            } 
+            this.currentActiveTrack.performanceEffect = "Drum section: " + performanceEffects[index];
+        }
+        else{
+            index = note - 113;
+            if ((index < 0) || (index > 12)) {
+                index = 0;
+            }
+            this.currentActiveTrack.performanceEffect = "Synth section: " + performanceEffects[index];
+        }
+    }
+
+    handleTapeBuffeSegments(note){
+        if(blackKeys.includes(note)){
+            this.currentActiveTrack.tapeBufferSegmentLength = blackKeys.findIndex(x => x === note);
+        }
+        else{
+            this.currentActiveTrack.tapeBufferSegment = whiteKeys.findIndex(x => x === note);
+        }
+    }
+
     convertTo100Range(value){
         return  Math.ceil((value*100)/127);
     }
@@ -124,11 +171,30 @@ class FxTrackHandler extends Component{
             case 185:
                 trackId = 1;
                 break;
+            case 186:
+                trackId = 2;
+                break;
+            case 187:
+                trackId = 3;
+                break;
+            case 188:
+                trackId = 4;
+                break;
+
             case 152:
                 trackId = 0;
                 break;
             case 153:
                 trackId = 1;
+                break;
+            case 154:
+                trackId = 2;
+                break;
+            case 155:
+                trackId = 3;
+                break;
+            case 156:
+                trackId = 4;
                 break;
             default:
                 break;
