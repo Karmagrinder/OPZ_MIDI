@@ -19,7 +19,7 @@ const purple = "#9e66c1";
 const pageIconSize = 35;
 const white = "#ffffff"
 
-function InstrumentTrack(props){
+function InstrumentTrackView(props){
     return (
         <div className="Instrument-tracks-component">
             <Card bg='dark' style={{ color: blue}} >
@@ -64,4 +64,4 @@ function InstrumentTrack(props){
     );
 }
 
-export default InstrumentTrack;
+export default InstrumentTrackView;

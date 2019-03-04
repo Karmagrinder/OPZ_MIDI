@@ -1,8 +1,9 @@
 import React,{Component} from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import "react-tabs/style/react-tabs.css";
-import InstrumentTrack from './InstrumentTrack';
+import InstrumentTrackView from './InstrumentTrackView';
 import GetIcon from './IconsLib';
+import NonInstrumentTrackView from './NonInstrumentTrackView';
 
 
 class TrackTabs extends Component{
@@ -34,6 +35,21 @@ class TrackTabs extends Component{
         }); // just setting the state so that it resluts in the whole component reload        
     }
 
+    populateTabPanel(type, track){
+        var output = ""
+        switch(type){
+            case "instrument":
+                output = <InstrumentTrackView track={track} />;
+                break;
+            case "nonInstrument":
+                output = <NonInstrumentTrackView track={track} />;
+                break;
+            default:
+                break;
+        }
+        return output;
+    }
+
     renderOutput(allTracks){
         var activeTabIndex = 0;
         if ((this.state.userTrigger === true)&& (this.autoTrigger === false)) {
@@ -50,7 +66,7 @@ class TrackTabs extends Component{
         );
 
         var tabPanels = allTracks.map((track) =>
-            <TabPanel key={track.trackName + 'Panel'} ><InstrumentTrack track={track} /></TabPanel>
+            <TabPanel key={track.trackName + 'Panel'} > {this.populateTabPanel(this.props.type, track)} </TabPanel>
         );
         //activeTabIndex = props.activeTrack;
 
