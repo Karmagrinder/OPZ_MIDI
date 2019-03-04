@@ -1,6 +1,16 @@
 # Release Notes
 
-## version 1.0
+## Version 1.1
+### Date:
+2019-03-04
+### Summary:
+1) Added support for non-instrument tracks, FX1, FX2, Tape, Master and Performance.
+
+### Known issues:
+1) Performance track triggers the view to switch between defferent tracks, this because internally performance track triggers effects on various tracks, and hence resulting in MIDI messsages being sent from the effected tracks.
+2) If you have programed step-parameters, this can result in track switching views during "play mode".
+
+## Version 1.0
 ### Date:
 2019-02-27
 ### Summary:

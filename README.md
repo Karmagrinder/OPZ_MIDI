@@ -27,8 +27,9 @@ The app will display parameters when you turn the dials/knobs on your OP-Z.
 
 ## Limitations
 1) This app only reacts to the MIDI messages sent by OP-Z, and therefore will be able to display information only when OP-Z send's the data. 
-2) Currently the app displays parameters for instrument tracks only.
-3) You have to touch/move the dials in order to display parameters for the 1st time. After that the track information is saved in memory. I usually just tap on the dials lightly. 
+2) You have to touch/move the dials in order to display parameters for the 1st time. After that the track information is saved in memory. I usually just tap on the dials lightly.
+3) Programed step-parameters can result in switching track-views during "play mode".
+4) Some performance effects can trigger view switching, because performance effects trigger controll messages on FX and instrument tracks. 
 
 
 # To run the app on local server
