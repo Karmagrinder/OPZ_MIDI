@@ -57,7 +57,7 @@ const icons = {
 };
 
 function getPathKey(label){
-    var path = ''
+    var path = '';
     switch(label){
         case "Kick":
             path = icons.kick;
@@ -159,7 +159,7 @@ function GetIcon(props){
                         d={pathVal}>
                     </path>
                 </g>
-            </svg>
+            </svg>;
 
     return icon;    
 }

@@ -4,9 +4,9 @@ import './InstrumentsTrackHandler.css';
 import TrackTabs from './Tabs';
 
 const trackType = "nonInstrument";
-const midiCcCommands = [184, 185, 186, 187, 188]
+const midiCcCommands = [184, 185, 186, 187, 188];
 const performanceEffects = ["Duck", "Filter Sweep", "Loop", "Stereo", "Loop1", "Pitch", "Echo",
-                            "Fill", "Short", "Fill1", "Long", "Random"]
+                            "Fill", "Short", "Fill1", "Long", "Random"];
 const blackKeys = [54, 56, 58, 61, 63, 66, 68, 70, 73, 75];
 const whiteKeys = [53, 55, 57, 59, 60, 62, 64, 65, 67, 69, 71, 72, 74, 76];
 
@@ -44,7 +44,7 @@ class NonInstrumentTrackHandler extends Component{
             tapeBufferSegment: 0,
             // masterChordProgression: "",
             performanceEffect: " "
-        }
+        };
 
         var i;
         for (i = 0; i <=4; i++) {
@@ -163,7 +163,7 @@ class NonInstrumentTrackHandler extends Component{
     }
 
     getTrackId(command) {
-        var trackId = 0
+        var trackId = 0;
         switch (command) {
             case 184:
                 trackId = 0;
