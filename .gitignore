@@ -4,6 +4,8 @@
 /node_modules
 /.pnp
 .pnp.js
+/.idea
+
 
 # testing
 /coverage
@@ -21,3 +23,5 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+OPZ_MIDI.iml
+

@@ -36,7 +36,7 @@ class TrackTabs extends Component{
     }
 
     populateTabPanel(type, track){
-        var output = ""
+        var output = "";
         switch(type){
             case "instrument":
                 output = <InstrumentTrackView track={track} />;

@@ -17,7 +17,7 @@ const red = "#C62937";
 //const opzGrey = "#646464";
 const purple = "#9e66c1";
 const pageIconSize = 35;
-const white = "#ffffff"
+const white = "#ffffff";
 
 function InstrumentTrackView(props){
     return (

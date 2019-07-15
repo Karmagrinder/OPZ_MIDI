@@ -36,11 +36,13 @@ class MainMIDI extends Component{
             clock:1,
             channel:1,
             note:"C",
-            velocity:0            
+            velocity:0,
+            outportPort: null,
+            heartbeat: null
         };
 
         this.midiMessage = "";
-        this.instrumetComponentEnable = false;
+        this.instrumentComponentEnable = false;
         this.deviceName = "";
         this.deviceId = "";
         this.modeDisplay= "";
@@ -55,12 +57,19 @@ class MainMIDI extends Component{
         this.clockHandler = this.clockHandler.bind(this);
         this.updateOutput = this.updateOutput.bind(this);
         this.setDeviceMode = this.setDeviceMode.bind(this);
+
+        this.onMIDIchanged = this.onMIDIchanged.bind(this);
+        this.probeInput = this.probeInput.bind(this);
+        this.probeOutput = this.probeOutput.bind(this);
+        this.heartbeat = this.heartbeat.bind(this);
+
+
     };
 
     
     //This is inbuilt function that get's executed before the component is mounted.
     componentWillMount(){
-        navigator.requestMIDIAccess()
+        navigator.requestMIDIAccess( {sysex: true} )
             .then(this.onMIDISuccess, this.onMIDIFailure);
     }
 
@@ -91,7 +100,7 @@ class MainMIDI extends Component{
                     </div>
                     <div>
                         <span>
-                            {this.instrumetComponentEnable && <InstrumentTrackComponent message={this.midiMessage} />}
+                            {this.instrumentComponentEnable && <InstrumentTrackComponent message={this.midiMessage} />}
                         </span>
                     </div>
                     <div>
@@ -108,24 +117,69 @@ class MainMIDI extends Component{
             return <div>{this.state.ModuleOutput}</div>            
     }
 
-    onMIDISuccess(midiAccess){
-        this.setState({
-            midiAccessSuccess: true,
-            inputs: midiAccess.inputs,
-            outputs: midiAccess.outputs,
-            displayMessage: "This browser supports MIDI input",
-            midiAccessDisplay: <GetIcon iconName="MIDI" size={30} strokeWidth={7} color={green} />
-         });
-
-         for(var input of midiAccess.inputs.values()){
+    probeInput(input) {
+        if (input.name === "OP-Z") {
             input.onmidimessage = this.getMIDIMessage;
             this.deviceId = input.id;
             this.deviceName = input.name;
         }
+    }
+
+    probeOutput(output) {
+        if (output.name === "OP-Z") {
+            this.setState({outputPort: output });
+            let intervalId = setInterval(this.heartbeat, 1000);
+            this.setState({heartbeat:intervalId});
+        }
+    }
+
+    heartbeat() {
+        if (this.state.outputPort === null) {
+            clearInterval(this.state.heartbeat);
+            return;
+        }
+        if (this.state.outputPort.state === "disconnected") {
+            clearInterval(this.state.heartbeat);
+            return;
+        }
+        this.state.outputPort.send([0xf0, 0x00, 0x20, 0x76, 0x01, 0x00, 0x03, 0x2d, 0x0e, 0x05, 0xf7 ]);
+        //console.log("Heartbeat");
+
+    }
+
+
+    onMIDISuccess(midiAccess){
+        this.setState({
+           midiAccessSuccess: true,
+           inputs: midiAccess.inputs,
+           outputs: midiAccess.outputs,
+           displayMessage: "This browser supports MIDI input",
+           midiAccessDisplay: <GetIcon iconName="MIDI" size={30} strokeWidth={7} color={green} />
+        });
+
+        for(var input of midiAccess.inputs.values()){
+            this.probeInput(input);
+        }
+        for(var output of midiAccess.outputs.values()) {
+            this.probeOutput(output);
+        }
+        midiAccess.onstatechange = this.onMIDIchanged;
 
         console.log("MIDI Access successful");
         console.log(midiAccess);
+    }
 
+    onMIDIchanged(event) {
+        if (event.port.state === "disconnected") {
+            if (this.state.outputPort === event.port) {
+                this.state.outputPort = null;
+            }
+        }
+        if (event.port.type === "input") {
+            this.probeInput(event.port);
+        } else {
+            this.probeOutput(event.port);
+        }
     }
 
     onMIDIFailure(){
@@ -139,13 +193,23 @@ class MainMIDI extends Component{
 
     getMIDIMessage(message) {
         var command = message.data[0];
+
+        if (command === 0xf0) {
+            if (message.data[5] === 0x0e) {
+                this.midiMessage = message;
+                this.instrumentComponentEnable = true;
+                this.updateOutput();
+            }
+        }
+
+
         
-        // if(command !== 248)  // 248 is the clock message.
-        // {   
-        //    var note = message.data[1];
-        //     var velocity = (message.data.length > 2) ? message.data[2] : 0; // a velocity value might not be included with a noteOff command
-        //     console.log("Command:"+ command + ", Note:" + note + ",Velocity:" + velocity)
-        // }
+        if(command !== 248)  // 248 is the clock message.
+        {
+           var note = message.data[1];
+           var velocity = (message.data.length > 2) ? message.data[2] : 0; // a velocity value might not be included with a noteOff command
+           console.log("Command:"+ command + ", Note:" + note + ",Velocity:" + velocity)
+        }
 
         if(command === 250){ // Play button
             this.setDeviceMode(true);
@@ -159,7 +223,7 @@ class MainMIDI extends Component{
         if (command > 175 && command < 184) {
 
             this.midiMessage = message;
-            this.instrumetComponentEnable = true;
+            this.instrumentComponentEnable = true;
             //this.fxTrackComponentEnable = false;
             //console.log("Command:"+ command + ", Note:" + note + ",Velocity:" + velocity);
             this.updateOutput();
@@ -168,7 +232,7 @@ class MainMIDI extends Component{
         if (nonInstrumentTrackCommands.includes(command)) {
 
             this.midiMessage = message;
-            //this.instrumetComponentEnable = false;
+            //this.instrumentComponentEnable = false;
             this.fxTrackComponentEnable = true;
             //console.log("Command:"+ command + ", Note:" + note + ",Velocity:" + velocity);
             this.updateOutput();
@@ -207,7 +271,7 @@ class MainMIDI extends Component{
         this.setState({
             note: note,
             velocity: 0
-        })
+        });
         this.updateOutput();
     }
 

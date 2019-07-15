@@ -19,6 +19,7 @@ class InstrumentsTrackHandler extends Component{
         this.setActiveTrack = this.setActiveTrack.bind(this);
         this.saveActiveTrack = this.saveActiveTrack.bind(this);
         this.handleLfoShape = this.handleLfoShape.bind(this);
+        this.parseSysexUpdate = this.parseSysexUpdate.bind(this);
     };
 
     
@@ -43,7 +44,7 @@ class InstrumentsTrackHandler extends Component{
             fx2: "",
             pan: "",
             level: ""
-        }
+        };
 
         var i;
         for (i = 0; i <=7; i++) {
@@ -72,8 +73,43 @@ class InstrumentsTrackHandler extends Component{
         this.instrumentTracks[trackId] = this.currentActiveTrack;
     }
 
+    parseSysexUpdate(message) {
+        let data = message.data;
+        console.log("Sysex update" + data[5]);
+        if (data[5] !== 0x0E) return;
+        console.log("0f update to voice " + data[7]);
+
+        this.setActiveTrack(data[7]);
+        this.activeTrackIndex = data[7];
+        this.currentActiveTrack.p1 = this.convertTo100Range(data[8]);
+        this.currentActiveTrack.p2 = this.convertTo100Range(data[9]);
+        this.currentActiveTrack.filter = this.convertTo100Range(data[17]);
+        this.currentActiveTrack.resonance = this.convertTo100Range(data[18]);
+        this.currentActiveTrack.attack = this.convertTo100Range(data[10]);
+        this.currentActiveTrack.decay = this.convertTo100Range(data[11]);
+        this.currentActiveTrack.sustain = this.convertTo100Range(data[12]);
+        this.currentActiveTrack.release = this.convertTo100Range(data[13]);
+        this.currentActiveTrack.depth = this.convertTo100Range(data[23]);
+        this.currentActiveTrack.rate = this.convertTo100Range(data[24]);
+        this.currentActiveTrack.dest = this.convertTo100Range(data[25]);
+        this.currentActiveTrack.shapeVal = this.convertTo100Range(data[26]);
+        this.handleLfoShape(this.currentActiveTrack.shapeVal);
+        this.currentActiveTrack.fx1 = this.convertTo100Range(data[14]);
+        this.currentActiveTrack.fx2 = this.convertTo100Range(data[15]);
+        this.currentActiveTrack.pan = this.convertTo100Range(data[19]);
+        this.currentActiveTrack.level = this.convertTo100Range(data[20]);
+        this.saveActiveTrack(data[7]);
+
+    }
+
     parseMessage(message){
+        console.log("parseMessage");
         var command = message.data[0];
+        if (command === 0xF0) {
+             this.parseSysexUpdate(message);
+             return;
+        }
+        console.log("Regular update");
         var note = message.data[1];
         var velocity = (message.data.length > 2) ? message.data[2] : 0; // a velocity value might not be included with a noteOff command
         var trackId = this.getTrackId(command);
@@ -165,7 +201,7 @@ class InstrumentsTrackHandler extends Component{
     }
 
     getTrackId(command) {
-        var trackId = 0
+        var trackId = 0;
         switch (command) {
             case 176:
                 trackId = 0;
