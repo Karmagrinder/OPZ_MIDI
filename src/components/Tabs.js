@@ -75,8 +75,10 @@ class TrackTabs extends Component{
                 <Tabs selectedIndex={activeTabIndex} onSelect={tabIndex => this.updateTheActiveTab(tabIndex)}>
                     <TabList>
                         {tabList}
+
                     </TabList>
                     {tabPanels}
+
                 </Tabs>
             </div>
         );

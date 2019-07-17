@@ -47,7 +47,7 @@ class InstrumentsTrackHandler extends Component{
         };
 
         var i;
-        for (i = 0; i <=7; i++) {
+        for (i = 0; i <=15; i++) {
             var newTrack = Object.create(trackTemplate);
             this.instrumentTracks.push(newTrack);
             this.instrumentTracks[i].trackName = this.trackNames[i];
@@ -75,9 +75,9 @@ class InstrumentsTrackHandler extends Component{
 
     parseSysexUpdate(message) {
         let data = message.data;
-        console.log("Sysex update" + data[5]);
+        //console.log("Sysex update" + data[5]);
         if (data[5] !== 0x0E) return;
-        console.log("0f update to voice " + data[7]);
+        //console.log("0f update to voice " + data[7]);
 
         this.setActiveTrack(data[7]);
         this.activeTrackIndex = data[7];
